@@ -3,12 +3,6 @@ import { OpenAIModel } from '@/types/openai';
 
 import { AZURE_DEPLOYMENT_ID, OPENAI_API_HOST, OPENAI_API_TYPE, OPENAI_API_VERSION, OPENAI_ORGANIZATION } from '../app/const';
 
-import {
-  ParsedEvent,
-  ReconnectInterval,
-  createParser,
-} from 'eventsource-parser';
-
 export class OpenAIError extends Error {
   type: string;
   param: string;
@@ -30,22 +24,10 @@ export const OpenAIStream = async (
   key: string,
   messages: Message[],
 ) => {
-  let url = `http://0.0.0.0:3000/chat`;
-  if (OPENAI_API_TYPE === 'azure') {
-    url = `${OPENAI_API_HOST}/openai/deployments/${AZURE_DEPLOYMENT_ID}/chat/completions?api-version=${OPENAI_API_VERSION}`;
-  }
+  let url = `vercel/v1/chat/completions`;
   const res = await fetch(url, {
     headers: {
       'Content-Type': 'application/json',
-      ...(OPENAI_API_TYPE === 'openai' && {
-        Authorization: `Bearer ${key ? key : process.env.OPENAI_API_KEY}`
-      }),
-      ...(OPENAI_API_TYPE === 'azure' && {
-        'api-key': `${key ? key : process.env.OPENAI_API_KEY}`
-      }),
-      ...((OPENAI_API_TYPE === 'openai' && OPENAI_ORGANIZATION) && {
-        'OpenAI-Organization': OPENAI_ORGANIZATION,
-      }),
     },
     method: 'POST',
     body: JSON.stringify({
@@ -62,13 +44,10 @@ export const OpenAIStream = async (
       stream: true,
     }),
   });
-  console.log("Brpp")
-  console.log(res.status)
-console.log("Mateus")
+
   const encoder = new TextEncoder();
   const decoder = new TextDecoder();
 
-  
   if (res.status !== 200) {
     const result = await res.json();
     if (result.error) {
@@ -86,36 +65,4 @@ console.log("Mateus")
       );
     }
   }
-
-  const stream = new ReadableStream({
-    async start(controller) {
-      const onParse = (event: ParsedEvent | ReconnectInterval) => {
-        if (event.type === 'event') {
-          const data = event.data;
-
-          try {
-            const json = JSON.parse(data);
-            if (json.choices[0].finish_reason != null) {
-              controller.close();
-              return;
-            }
-            const text = json.choices[0].delta.content;
-            const queue = encoder.encode(text);
-            controller.enqueue(queue);
-          } catch (e) {
-            controller.error(e);
-          }
-        }
-      };
-      
-
-      const parser = createParser(onParse);
-
-      for await (const chunk of res.body as any) {
-        parser.feed(decoder.decode(chunk));
-      }
-    },
-  });
-
-  return stream;
-};
+}
