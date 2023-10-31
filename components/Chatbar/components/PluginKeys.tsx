@@ -279,6 +279,10 @@ export const PluginKeys = () => {
                               key: 'WEAVIATE_API_KEY',
                               value: '',
                             },
+                            {
+                              key: 'CLASS_NAME',
+                              value: '',
+                            },
                           ],
                         };
 
@@ -338,19 +342,90 @@ export const PluginKeys = () => {
                               key: 'WEAVIATE_API_KEY',
                               value: e.target.value,
                             },
+                            {
+                              key: 'CLASS_NAME',
+                              value: '',
+                            },
                           ],
                         };
 
                         handlePluginKeyChange(newPluginKey);
                       }
                     }}
+
+                    
+                  />
+
+<div className="mt-6 text-sm font-bold text-black dark:text-neutral-200">
+                    Weaviate Class Name
+                  </div>
+                  <input
+                    className="mt-2 w-full rounded-lg border border-neutral-500 px-4 py-2 text-neutral-900 shadow focus:outline-none dark:border-neutral-800 dark:border-opacity-50 dark:bg-[#40414F] dark:text-neutral-100"
+                    type="text"
+                    value={
+                      pluginKeys
+                        .find((p) => p.pluginId === PluginID.WEAVIATE_SEARCH)
+                        ?.requiredKeys.find((k) => k.key === 'CLASS_NAME')
+                        ?.value
+                    }
+                    onChange={(e) => {
+                      const pluginKey = pluginKeys.find(
+                        (p) => p.pluginId === PluginID.WEAVIATE_SEARCH,
+                      );
+
+                      if (pluginKey) {
+                        const requiredKey = pluginKey.requiredKeys.find(
+                          (k) => k.key === 'CLASS_NAME',
+                        );
+
+                        if (requiredKey) {
+                          const updatedPluginKey = {
+                            ...pluginKey,
+                            requiredKeys: pluginKey.requiredKeys.map((k) => {
+                              if (k.key === 'CLASS_NAME') {
+                                return {
+                                  ...k,
+                                  value: e.target.value,
+                                };
+                              }
+
+                              return k;
+                            }),
+                          };
+
+                          handlePluginKeyChange(updatedPluginKey);
+                        }
+                      } else {
+                        const newPluginKey: PluginKey = {
+                          pluginId: PluginID.WEAVIATE_SEARCH,
+                          requiredKeys: [
+                            {
+                              key: 'WEAVIATE_URL',
+                              value: '',
+                            },
+                            {
+                              key: 'WEAVIATE_API_KEY',
+                              value: '',
+                            },
+                            {
+                              key: 'CLASS_NAME',
+                              value: e.target.value,
+                            },
+                          ],
+                        };
+
+                        handlePluginKeyChange(newPluginKey);
+                      }
+                    }}
+
+                    
                   />
 
                   <button
                     className="mt-6 w-full rounded-lg border border-neutral-500 px-4 py-2 text-neutral-900 shadow hover:bg-neutral-100 focus:outline-none dark:border-neutral-800 dark:border-opacity-50 dark:bg-white dark:text-black dark:hover:bg-neutral-300"
                     onClick={() => {
                       const pluginKey = pluginKeys.find(
-                        (p) => p.pluginId === PluginID.GOOGLE_SEARCH,
+                        (p) => p.pluginId === PluginID.WEAVIATE_SEARCH,
                       );
 
                       if (pluginKey) {

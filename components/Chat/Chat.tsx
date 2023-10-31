@@ -21,7 +21,7 @@ import {
 import { throttle } from '@/utils/data/throttle';
 
 import { ChatBody, Conversation, Message } from '@/types/chat';
-import { Plugin } from '@/types/plugin';
+import { Plugin, PluginID } from '@/types/plugin';
 
 import HomeContext from '@/pages/api/home/home.context';
 
@@ -104,7 +104,18 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
         let body;
         if (!plugin) {
           body = JSON.stringify(chatBody);
-        } else {
+        } else if( plugin.id == PluginID.GOOGLE_SEARCH) {
+          body = JSON.stringify({
+            ...chatBody,
+            weaviateURL: pluginKeys
+              .find((key) => key.pluginId === 'google-search')
+              ?.requiredKeys.find((key) => key.key === 'GOOGLE_API_KEY')?.value,
+              weaviateAPI: pluginKeys
+              .find((key) => key.pluginId === 'google-search')
+              ?.requiredKeys.find((key) => key.key === 'GOOGLE_CSE_ID')?.value,
+          });
+        }
+        else if(plugin.id == PluginID.WEAVIATE_SEARCH){
           body = JSON.stringify({
             ...chatBody,
             googleAPIKey: pluginKeys
@@ -114,7 +125,9 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
               .find((key) => key.pluginId === 'google-search')
               ?.requiredKeys.find((key) => key.key === 'GOOGLE_CSE_ID')?.value,
           });
+
         }
+
         const controller = new AbortController();
         const response = await fetch(endpoint, {
           method: 'POST',

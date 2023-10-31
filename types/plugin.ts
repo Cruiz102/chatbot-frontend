@@ -24,7 +24,8 @@ export enum PluginName {
 // New interface for Weaviate credentials
 export interface WeaviateCredentials {
   weaviateUrl: string;
-  weaviateApiKey: string;
+  weaviateApiKey: string; 
+  className: string; 
 }
 
 // Existing or new union type for all plugins
@@ -64,6 +65,8 @@ export const Plugins: Record<PluginID, Plugin> = {
         key: 'WEAVIATE_API_KEY',
         value: '',
       },
+      { key: 'CLASS_NAME', 
+        value: '' }, 
     ],
   },
 };
