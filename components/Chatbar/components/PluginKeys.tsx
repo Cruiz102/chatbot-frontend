@@ -236,25 +236,25 @@ export const PluginKeys = () => {
                     type="password"
                     value={
                       pluginKeys
-                        .find((p) => p.pluginId === PluginID.GOOGLE_SEARCH)
-                        ?.requiredKeys.find((k) => k.key === 'GOOGLE_API_KEY')
+                        .find((p) => p.pluginId === PluginID.WEAVIATE_SEARCH)
+                        ?.requiredKeys.find((k) => k.key === 'WEAVIATE_URL')
                         ?.value
                     }
                     onChange={(e) => {
                       const pluginKey = pluginKeys.find(
-                        (p) => p.pluginId === PluginID.GOOGLE_SEARCH,
+                        (p) => p.pluginId === PluginID.WEAVIATE_SEARCH,
                       );
 
                       if (pluginKey) {
                         const requiredKey = pluginKey.requiredKeys.find(
-                          (k) => k.key === 'GOOGLE_API_KEY',
+                          (k) => k.key === 'WEAVIATE_URL',
                         );
 
                         if (requiredKey) {
                           const updatedPluginKey = {
                             ...pluginKey,
                             requiredKeys: pluginKey.requiredKeys.map((k) => {
-                              if (k.key === 'GOOGLE_API_KEY') {
+                              if (k.key === 'WEAVIATE_URL') {
                                 return {
                                   ...k,
                                   value: e.target.value,
@@ -269,14 +269,14 @@ export const PluginKeys = () => {
                         }
                       } else {
                         const newPluginKey: PluginKey = {
-                          pluginId: PluginID.GOOGLE_SEARCH,
+                          pluginId: PluginID.WEAVIATE_SEARCH,
                           requiredKeys: [
                             {
-                              key: 'GOOGLE_API_KEY',
+                              key: 'WEAVIATE_URL',
                               value: e.target.value,
                             },
                             {
-                              key: 'GOOGLE_CSE_ID',
+                              key: 'WEAVIATE_API_KEY',
                               value: '',
                             },
                           ],
@@ -295,25 +295,25 @@ export const PluginKeys = () => {
                     type="password"
                     value={
                       pluginKeys
-                        .find((p) => p.pluginId === PluginID.GOOGLE_SEARCH)
-                        ?.requiredKeys.find((k) => k.key === 'GOOGLE_CSE_ID')
+                        .find((p) => p.pluginId === PluginID.WEAVIATE_SEARCH)
+                        ?.requiredKeys.find((k) => k.key === 'WEAVIATE_API_KEY')
                         ?.value
                     }
                     onChange={(e) => {
                       const pluginKey = pluginKeys.find(
-                        (p) => p.pluginId === PluginID.GOOGLE_SEARCH,
+                        (p) => p.pluginId === PluginID.WEAVIATE_SEARCH,
                       );
 
                       if (pluginKey) {
                         const requiredKey = pluginKey.requiredKeys.find(
-                          (k) => k.key === 'GOOGLE_CSE_ID',
+                          (k) => k.key === 'WEAVIATE_API_KEY',
                         );
 
                         if (requiredKey) {
                           const updatedPluginKey = {
                             ...pluginKey,
                             requiredKeys: pluginKey.requiredKeys.map((k) => {
-                              if (k.key === 'GOOGLE_CSE_ID') {
+                              if (k.key === 'WEAVIATE_API_KEY') {
                                 return {
                                   ...k,
                                   value: e.target.value,
@@ -328,14 +328,14 @@ export const PluginKeys = () => {
                         }
                       } else {
                         const newPluginKey: PluginKey = {
-                          pluginId: PluginID.GOOGLE_SEARCH,
+                          pluginId: PluginID.WEAVIATE_SEARCH,
                           requiredKeys: [
                             {
-                              key: 'GOOGLE_API_KEY',
+                              key: 'WEAVIATE_URL',
                               value: '',
                             },
                             {
-                              key: 'GOOGLE_CSE_ID',
+                              key: 'WEAVIATE_API_KEY',
                               value: e.target.value,
                             },
                           ],
