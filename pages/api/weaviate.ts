@@ -1,7 +1,9 @@
 import { DEFAULT_SYSTEM_PROMPT, DEFAULT_TEMPERATURE } from '@/utils/app/const';
-import { OpenAIError, OpenAIStream } from '@/utils/server';
+import { OpenAIError } from '@/utils/server';
+import {WeaviateStream } from '@/utils/server/weaviate';
 
-import { ChatBody, Message } from '@/types/chat';
+import { Message } from '@/types/chat';
+import { WeaviateBody } from '@/types/weaviate';
 
 // @ts-expect-error
 import wasm from '../../node_modules/@dqbd/tiktoken/lite/tiktoken_bg.wasm?module';
@@ -15,7 +17,8 @@ export const config = {
 
 const handler = async (req: Request): Promise<Response> => {
   try {
-    const { model, messages, key, prompt, temperature } = (await req.json()) as ChatBody;
+    const { model, messages, key, prompt, temperature ,
+      weaviateURL, weaviateAPI, className} = (await req.json()) as WeaviateBody;
 
     await init((imports) => WebAssembly.instantiate(wasm, imports));
     const encoding = new Tiktoken(
@@ -52,7 +55,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     encoding.free();
 
-    const stream = await OpenAIStream(model, promptToSend, temperatureToUse, key, messagesToSend);
+    const stream = await WeaviateStream(model, promptToSend, temperatureToUse, key, messagesToSend,weaviateURL, weaviateAPI, className );
 
     return new Response(stream);
   } catch (error) {

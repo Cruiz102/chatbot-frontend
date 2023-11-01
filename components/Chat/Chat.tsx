@@ -118,12 +118,16 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
         else if(plugin.id == PluginID.WEAVIATE_SEARCH){
           body = JSON.stringify({
             ...chatBody,
-            googleAPIKey: pluginKeys
-              .find((key) => key.pluginId === 'google-search')
-              ?.requiredKeys.find((key) => key.key === 'GOOGLE_API_KEY')?.value,
-            googleCSEId: pluginKeys
-              .find((key) => key.pluginId === 'google-search')
-              ?.requiredKeys.find((key) => key.key === 'GOOGLE_CSE_ID')?.value,
+            weaviateURL: pluginKeys
+              .find((key) => key.pluginId === 'weaviate-search')
+              ?.requiredKeys.find((key) => key.key === 'WEAVIATE_URL')?.value,
+              weaviateAPI: pluginKeys
+              .find((key) => key.pluginId === 'weaviate-search')
+              ?.requiredKeys.find((key) => key.key === 'WEAVIATE_API_KEY')?.value,
+              className: pluginKeys
+              .find((key) => key.pluginId === 'weaviate-search')
+              ?.requiredKeys.find((key) => key.key === 'CLASS_NAME')?.value,
+
           });
 
         }

@@ -28,9 +28,10 @@ export const WeaviateStream = async (
   systemPrompt: string,
   temperature : number,
   key: string,
+  messages: Message[],
   weaviate_url: string,
   weaviate_api_key: string,
-  messages: Message[],
+  weaviate_classname: string,
 ) => {
   let url = `http://0.0.0.0:3000/chat`;
   if (OPENAI_API_TYPE === 'azure') {
