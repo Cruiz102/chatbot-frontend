@@ -53,6 +53,10 @@ export const WeaviateStream = async (
     method: 'POST',
     body: JSON.stringify({
       ...(OPENAI_API_TYPE === 'openai' && {model: model.id}),
+      
+      weaviate_url: weaviate_url,
+      weaviate_api_key: weaviate_api_key,
+      weaviate_class_name: weaviate_classname,
       messages: [
         {
           role: 'system',
@@ -95,6 +99,17 @@ console.log("Mateus")
       const onParse = (event: ParsedEvent | ReconnectInterval) => {
         if (event.type === 'event') {
           const data = event.data;
+          // console.log(data)
+
+          try {
+            const json = JSON.parse(data);
+            // ...rest of your code
+          } catch (e) {
+            console.error('Error parsing JSON:', e);
+            // You might want to log the raw data here as well
+            console.log('Raw data causing error:', data);
+            controller.error(e);
+          }
 
           try {
             const json = JSON.parse(data);
@@ -107,6 +122,7 @@ console.log("Mateus")
             controller.enqueue(queue);
           } catch (e) {
             controller.error(e);
+            console.log(e)
           }
         }
       };

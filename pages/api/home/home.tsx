@@ -409,7 +409,14 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   const googleApiKey = process.env.GOOGLE_API_KEY;
   const googleCSEId = process.env.GOOGLE_CSE_ID;
 
+  const weaviateURL = process.env.WEAVIATE_URL
+  const weaviateAPI = process.env.WEAVIATE_API_KEY
+  const weaviateClass = process.env.CLASS_NAME
+
   if (googleApiKey && googleCSEId) {
+    serverSidePluginKeysSet = true;
+  }
+  if(weaviateURL && weaviateAPI && weaviateClass){
     serverSidePluginKeysSet = true;
   }
 

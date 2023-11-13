@@ -107,10 +107,10 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
         } else if( plugin.id == PluginID.GOOGLE_SEARCH) {
           body = JSON.stringify({
             ...chatBody,
-            weaviateURL: pluginKeys
+            googleAPIKey: pluginKeys
               .find((key) => key.pluginId === 'google-search')
               ?.requiredKeys.find((key) => key.key === 'GOOGLE_API_KEY')?.value,
-              weaviateAPI: pluginKeys
+              googleCSEId: pluginKeys
               .find((key) => key.pluginId === 'google-search')
               ?.requiredKeys.find((key) => key.key === 'GOOGLE_CSE_ID')?.value,
           });
@@ -141,7 +141,10 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
           signal: controller.signal,
           body,
         });
+        console.log(response);
         if (!response.ok) {
+          console.log("Response is  not OK")
+          console.log(response)
           homeDispatch({ field: 'loading', value: false });
           homeDispatch({ field: 'messageIsStreaming', value: false });
           toast.error(response.statusText);
@@ -149,11 +152,14 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
         }
         const data = response.body;
         if (!data) {
+          console.log("Data is not working")
+          console.log(data);
           homeDispatch({ field: 'loading', value: false });
           homeDispatch({ field: 'messageIsStreaming', value: false });
           return;
         }
-        if (!plugin) {
+    
+          console.log("Plugin is not SET!!! or is Weaviate")
           if (updatedConversation.messages.length === 1) {
             const { content } = message;
             const customName =
@@ -229,37 +235,37 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
           homeDispatch({ field: 'conversations', value: updatedConversations });
           saveConversations(updatedConversations);
           homeDispatch({ field: 'messageIsStreaming', value: false });
-        } else {
-          const { answer } = await response.json();
-          const updatedMessages: Message[] = [
-            ...updatedConversation.messages,
-            { role: 'assistant', content: answer },
-          ];
-          updatedConversation = {
-            ...updatedConversation,
-            messages: updatedMessages,
-          };
-          homeDispatch({
-            field: 'selectedConversation',
-            value: updateConversation,
-          });
-          saveConversation(updatedConversation);
-          const updatedConversations: Conversation[] = conversations.map(
-            (conversation) => {
-              if (conversation.id === selectedConversation.id) {
-                return updatedConversation;
-              }
-              return conversation;
-            },
-          );
-          if (updatedConversations.length === 0) {
-            updatedConversations.push(updatedConversation);
-          }
-          homeDispatch({ field: 'conversations', value: updatedConversations });
-          saveConversations(updatedConversations);
-          homeDispatch({ field: 'loading', value: false });
-          homeDispatch({ field: 'messageIsStreaming', value: false });
-        }
+        // } else {
+        //   const { answer } = await response.json();
+        //   const updatedMessages: Message[] = [
+        //     ...updatedConversation.messages,
+        //     { role: 'assistant', content: answer },
+        //   ];
+        //   updatedConversation = {
+        //     ...updatedConversation,
+        //     messages: updatedMessages,
+        //   };
+        //   homeDispatch({
+        //     field: 'selectedConversation',
+        //     value: updateConversation,
+        //   });
+        //   saveConversation(updatedConversation);
+        //   const updatedConversations: Conversation[] = conversations.map(
+        //     (conversation) => {
+        //       if (conversation.id === selectedConversation.id) {
+        //         return updatedConversation;
+        //       }
+        //       return conversation;
+        //     },
+        //   );
+        //   if (updatedConversations.length === 0) {
+        //     updatedConversations.push(updatedConversation);
+        //   }
+        //   homeDispatch({ field: 'conversations', value: updatedConversations });
+        //   saveConversations(updatedConversations);
+        //   homeDispatch({ field: 'loading', value: false });
+        //   homeDispatch({ field: 'messageIsStreaming', value: false });
+        // }
       }
     },
     [
