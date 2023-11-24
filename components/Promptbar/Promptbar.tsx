@@ -15,6 +15,8 @@ import { PromptbarSettings } from './components/PromptbarSettings';
 import { Prompts } from './components/Prompts';
 
 import Sidebar from '../Sidebar';
+import SidebarTabs from '../Sidebar/SidebarTabs';
+
 import PromptbarContext from './PromptBar.context';
 import { PromptbarInitialState, initialState } from './Promptbar.state';
 
@@ -125,7 +127,7 @@ const Promptbar = () => {
         handleUpdatePrompt,
       }}
     >
-      <Sidebar<Prompt>
+      <SidebarTabs<Prompt>
         side={'right'}
         isOpen={showPromptbar}
         addItemButtonTitle={t('New prompt')}
