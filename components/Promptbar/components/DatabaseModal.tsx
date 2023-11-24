@@ -4,8 +4,8 @@ import { IconCheck, IconX } from '@tabler/icons-react';
 
 interface DatabaseSelectModalProps {
   onClose: () => void;
-  onSelectDatabase: (database: string) => void; // Callback when a database is selected
-  databases: string[]; // Array of database names
+  onSelectDatabase: (database: string) => void;
+  databases: string[];
 }
 
 export const DatabaseSelectModal: React.FC<DatabaseSelectModalProps> = ({
@@ -16,7 +16,6 @@ export const DatabaseSelectModal: React.FC<DatabaseSelectModalProps> = ({
   const { t } = useTranslation('sidebar');
   const modalRef = useRef<HTMLDivElement>(null);
 
-  // Close modal when clicking outside of it
   useEffect(() => {
     const handleMouseDown = (e: MouseEvent) => {
       if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
@@ -29,12 +28,10 @@ export const DatabaseSelectModal: React.FC<DatabaseSelectModalProps> = ({
   }, [onClose]);
 
   return (
-    <div
-      className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
-    >
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div
         ref={modalRef}
-        className="inline-block max-h-[400px] overflow-y-auto rounded-lg border bg-white shadow-xl transition-all p-6 align-middle"
+        className="dark:border-netural-400 inline-block max-h-[400px] transform overflow-y-auto rounded-lg border border-gray-300 bg-white px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all dark:bg-[#202123] sm:my-8 sm:max-h-[600px] sm:w-full sm:max-w-lg sm:p-6 sm:align-middle"
         role="dialog"
       >
         <div className="mb-4 text-lg font-bold">{t('Select a Database')}</div>
