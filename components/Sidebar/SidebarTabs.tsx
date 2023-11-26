@@ -14,6 +14,7 @@ interface SidebarTabsProps<T> {
   side: 'left' | 'right';
   items: T[];
   itemComponent: ReactNode;
+  databaseComponent: ReactNode;
   folderComponent: ReactNode;
   footerComponent?: ReactNode;
   searchTerm: string;
@@ -68,7 +69,7 @@ const SidebarTabs = <T,>({
 }: SidebarTabsProps<T>) => {
   const { t } = useTranslation('sidebar');
 
-  const tabs = ['Chats', 'Folders', 'Database']; // Add more tabs as needed
+  const tabs = ['Chats', 'Database']; // Add more tabs as needed
   const [activeTab, setActiveTab] = useState(tabs[0]);
   const [showDatabasePopup, setShowDatabasePopup] = useState(false);
   const [selectedDatabase, setSelectedDatabase] = useState<string | null>(null);
@@ -108,9 +109,10 @@ const SidebarTabs = <T,>({
   const renderTabContent = () => {
     switch (activeTab) {
       case 'Chats':
-        return itemComponent;
-      case 'Folders':
-        return folderComponent;
+        return<div>
+            {itemComponent}
+            {folderComponent}
+               </div>;
       case 'Database':
         return (
           <button onClick={() => setShowDatabasePopup(true)}>
@@ -126,22 +128,45 @@ const SidebarTabs = <T,>({
     <div className={`sidebar ${side} ${isOpen ? 'open' : 'closed'}`}>
       <div className="sidebar-header">
         {renderTabHeader()}
+
+        {/* Add your buttons here */}
+        <div className="flex items-center">
+          <button
+            className="text-sidebar flex w-[190px] flex-shrink-0 cursor-pointer select-none items-center gap-3 rounded-md border border-white/20 p-3 text-white transition-colors duration-200 hover:bg-gray-500/10"
+            onClick={() => {
+              handleCreateItem();
+              handleSearchTerm('');
+            }}
+          >
+            <IconPlus size={16} />
+            {addItemButtonTitle}
+          </button>
+
+          <button
+            className="ml-2 flex flex-shrink-0 cursor-pointer items-center gap-3 rounded-md border border-white/20 p-3 text-sm text-white transition-colors duration-200 hover:bg-gray-500/10"
+            onClick={handleCreateFolder}
+          >
+            <IconFolderPlus size={16} />
+          </button>
+        </div>
+
         <Search
           placeholder={t('Search...')}
           searchTerm={searchTerm}
           onSearch={handleSearchTerm}
         />
       </div>
-      <div className="sidebar-content">
+
+      <div className="sidebar-content" style={{ maxHeight: 'calc(100vh - 120px)', overflowY: 'auto' }}>
         {renderTabContent()}
       </div>
+
       {footerComponent}
       <CloseSidebarButton onClick={toggleOpen} side={side} />
       
       {showDatabasePopup && (
         <DatabaseSelectModal
           databases={['Database1', 'Database2', 'Database3']}
-
           onClose={() => setShowDatabasePopup(false)}
           onSelectDatabase={handleSelectDatabase}
         />
@@ -151,5 +176,6 @@ const SidebarTabs = <T,>({
     <OpenSidebarButton onClick={toggleOpen} side={side} />
   );
 };
+
 
 export default SidebarTabs;

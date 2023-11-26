@@ -19,7 +19,7 @@ import SidebarTabs from '../Sidebar/SidebarTabs';
 
 import PromptbarContext from './PromptBar.context';
 import { PromptbarInitialState, initialState } from './Promptbar.state';
-
+import { Databases } from './components/Databases';
 import { v4 as uuidv4 } from 'uuid';
 
 const Promptbar = () => {
@@ -134,6 +134,11 @@ const Promptbar = () => {
         itemComponent={
           <Prompts
             prompts={filteredPrompts.filter((prompt) => !prompt.folderId)}
+          />
+        }
+        databaseComponent={
+          <Databases
+            databases={filteredDatabases} // This would be your state or prop with database items
           />
         }
         folderComponent={<PromptFolders />}
