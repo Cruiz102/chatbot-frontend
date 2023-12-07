@@ -21,6 +21,7 @@ import PromptbarContext from './PromptBar.context';
 import { PromptbarInitialState, initialState } from './Promptbar.state';
 import { Databases } from './components/Databases';
 import { v4 as uuidv4 } from 'uuid';
+import { DatabaseItem } from '@/types/databaseItem';
 
 const Promptbar = () => {
   const { t } = useTranslation('promptbar');
@@ -30,13 +31,13 @@ const Promptbar = () => {
   });
 
   const {
-    state: { prompts, defaultModelId, showPromptbar },
+    state: { prompts, defaultModelId, showPromptbar, DatabaseItems },
     dispatch: homeDispatch,
     handleCreateFolder,
   } = useContext(HomeContext);
 
   const {
-    state: { searchTerm, filteredPrompts },
+    state: { searchTerm, filteredPrompts , },
     dispatch: promptDispatch,
   } = promptBarContextValue;
 
@@ -117,6 +118,21 @@ const Promptbar = () => {
       promptDispatch({ field: 'filteredPrompts', value: prompts });
     }
   }, [searchTerm, prompts]);
+
+
+
+  const [filteredDatabases, setFilteredDatabases] = useState<DatabaseItem[]>([]);
+  useEffect(() => {
+    // Filter logic
+    const newFilteredDatabases = DatabaseItems.filter((databaseItem) => {
+      const searchable = databaseItem.name.toLowerCase() + ' ' + databaseItem.name.toLowerCase();
+      return searchable.includes(searchTerm.toLowerCase());
+    });
+
+    // Update the state
+    setFilteredDatabases(newFilteredDatabases);
+  }, [searchTerm, DatabaseItems]);
+
 
   return (
     <PromptbarContext.Provider
