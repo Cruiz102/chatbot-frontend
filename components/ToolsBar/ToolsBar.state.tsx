@@ -1,11 +1,11 @@
 import { Prompt } from '@/types/prompt';
 
-export interface PromptbarInitialState {
+export interface ToolsInitialState {
   searchTerm: string;
   filteredPrompts: Prompt[];
 }
 
-export const initialState: PromptbarInitialState = {
+export const initialState: ToolsbarInitialState = {
   searchTerm: '',
   filteredPrompts: [],
 };

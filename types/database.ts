@@ -1,10 +1,17 @@
 // types/databaseItem.ts
+
+
 export interface DatabaseItem {
     id: string;
     name: string;
     // other properties as needed, such as connection status, etc.
   }
   
+
+export interface DatabaseClass {
+  name: string;
+  items: DatabaseItem;
+}
 
   export interface Property {
     dataType: string[];

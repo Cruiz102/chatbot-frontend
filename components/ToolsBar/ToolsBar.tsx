@@ -10,28 +10,32 @@ import { Prompt } from '@/types/prompt';
 
 import HomeContext from '@/pages/api/home/home.context';
 
-import { PromptFolders } from './components/PromptFolders';
-import { PromptbarSettings } from './components/PromptbarSettings';
-import { Prompts } from './components/Prompts';
+import { PromptFolders } from './components/PromptTab/PromptFolders';
+import { PromptbarSettings } from './components/PromptTab/PromptbarSettings';
+import { Prompts } from './components/PromptTab/Prompts';
 
 import Sidebar from '../Sidebar';
 import SidebarTabs from '../Sidebar/SidebarTabs';
 
-import PromptbarContext from './PromptBar.context';
-import { PromptbarInitialState, initialState } from './Promptbar.state';
-import { Databases } from './components/Databases';
+import PromptbarContext from './ToolsBar.context';
+import { PromptbarInitialState, initialState } from './ToolsBar.state';
+import { Databases } from './components/DatabaseTab/Databases';
 import { v4 as uuidv4 } from 'uuid';
-import { DatabaseItem } from '@/types/databaseItem';
+import { Databaseclasses } from '@/types/databaseItem';
 
-const Promptbar = () => {
+const ToolsbBar = () => {
   const { t } = useTranslation('promptbar');
 
+
+  // ---------------------------------------------------------
+  // ------------PROMPT HANDLERERS----------------------------
+  // ---------------------------------------------------------
   const promptBarContextValue = useCreateReducer<PromptbarInitialState>({
     initialState,
   });
 
   const {
-    state: { prompts, defaultModelId, showPromptbar, DatabaseItems },
+    state: { prompts, defaultModelId, showPromptbar,Databaseclasses },
     dispatch: homeDispatch,
     handleCreateFolder,
   } = useContext(HomeContext);
@@ -121,6 +125,10 @@ const Promptbar = () => {
 
 
 
+  // ---------------------------------------------------------
+  // ------------DATABASE HANDLERERS----------------------------
+  // ---------------------------------------------------------
+
   const [filteredDatabases, setFilteredDatabases] = useState<DatabaseItem[]>([]);
   useEffect(() => {
     // Filter logic
@@ -154,7 +162,8 @@ const Promptbar = () => {
         }
         databaseComponent={
           <Databases
-            databases={filteredDatabases} // This would be your state or prop with database items
+          databases={filteredDatabases}
+      
           />
         }
         folderComponent={<PromptFolders />}
@@ -172,4 +181,4 @@ const Promptbar = () => {
   );
 };
 
-export default Promptbar;
+export default ToolsbBar;

@@ -1,20 +1,39 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { useTranslation } from 'next-i18next';
 import { IconCheck, IconX } from '@tabler/icons-react';
-
+import HomeContext from '@/pages/api/home/home.context';
 interface DatabaseSelectModalProps {
   onClose: () => void;
   onSelectDatabase: (database: string) => void;
-  databases: string[];
 }
 
 export const DatabaseSelectModal: React.FC<DatabaseSelectModalProps> = ({
   onClose,
   onSelectDatabase,
-  databases,
 }) => {
   const { t } = useTranslation('sidebar');
   const modalRef = useRef<HTMLDivElement>(null);
+  const [databases, setDatabases] = useState<string[]>([]);
+  const { updateDatabaseClasses } = useContext(HomeContext); // Use context to update HomeState
+
+  useEffect(() => {
+    const fetchDatabases = async () => {
+      try {
+        const response = await fetch('API_ENDPOINT_URL'); // Replace with your API endpoint
+        const data = await response.json();
+        setDatabases(data.map(db => db.name)); // Assuming each database object has a 'name' property
+        updateDatabaseClasses(data); // Update HomeState
+      } catch (error) {
+        console.error('Failed to fetch databases:', error);
+      }
+    };
+
+    fetchDatabases();
+  }, [updateDatabaseClasses]);
+
+
+
+
 
   useEffect(() => {
     const handleMouseDown = (e: MouseEvent) => {

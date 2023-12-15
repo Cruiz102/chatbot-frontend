@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { IconFolderPlus, IconMistOff, IconPlus } from '@tabler/icons-react';
 import { IconDatabase, IconFilePlus, IconSchema   } from '@tabler/icons-react';
 import {SchemaDetails} from '../../types/database';
-import { DatabaseSelectModal } from '../Promptbar/components/DatabaseModal';
-import { SchemaCreationModal } from '../Promptbar/components/SchemaCreationModal';
+import { DatabaseSelectModal } from '../TabBar/components/DatabaseModal';
+import { SchemaCreationModal } from '../TabBar/components/SchemaCreationModal';
 import {
   CloseSidebarButton,
   OpenSidebarButton,

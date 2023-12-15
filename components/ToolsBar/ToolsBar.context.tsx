@@ -4,7 +4,7 @@ import { ActionType } from '@/hooks/useCreateReducer';
 
 import { Prompt } from '@/types/prompt';
 
-import { PromptbarInitialState } from './Promptbar.state';
+import { PromptbarInitialState } from './ToolsBar.state';
 
 export interface PromptbarContextProps {
   state: PromptbarInitialState;
@@ -14,6 +14,6 @@ export interface PromptbarContextProps {
   handleUpdatePrompt: (prompt: Prompt) => void;
 }
 
-const PromptbarContext = createContext<PromptbarContextProps>(undefined!);
+const ToolsbarContext = createContext<PromptbarContextProps>(undefined!);
 
-export default PromptbarContext;
+export default ToolsbarContext;

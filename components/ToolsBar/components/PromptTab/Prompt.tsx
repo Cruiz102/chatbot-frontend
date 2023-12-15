@@ -16,7 +16,7 @@ import { Prompt } from '@/types/prompt';
 
 import SidebarActionButton from '@/components/Buttons/SidebarActionButton';
 
-import PromptbarContext from '../PromptBar.context';
+import PromptbarContext from '../../ToolsBar.context';
 import { PromptModal } from './PromptModal';
 
 interface Props {

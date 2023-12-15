@@ -1,5 +1,5 @@
 import { Conversation, Message } from '@/types/chat';
-import { DatabaseItem,  } from '@/types/database';
+import { DatabaseClass, DatabaseItem,  } from '@/types/database';
 import { ErrorMessage } from '@/types/error';
 import { FolderInterface } from '@/types/folder';
 import { OpenAIModel, OpenAIModelID } from '@/types/openai';
@@ -19,7 +19,7 @@ export interface HomeInitialState {
   selectedConversation: Conversation | undefined;
   currentMessage: Message | undefined;
   prompts: Prompt[];
-  DatabaseItems: DatabaseItem[];
+  Databaseclasses: DatabaseClass[];
   // SchemaItems: SchemaItem[];
   temperature: number;
   showChatbar: boolean;
@@ -45,7 +45,7 @@ export const initialState: HomeInitialState = {
   selectedConversation: undefined,
   currentMessage: undefined,
   prompts: [],
-  DatabaseItems: [],
+  Databaseclasses: [],
   temperature: 1,
   showPromptbar: true,
   showChatbar: true,
