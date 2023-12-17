@@ -2,12 +2,12 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import { useTranslation } from 'next-i18next';
 import { IconCheck, IconX } from '@tabler/icons-react';
 import HomeContext from '@/pages/api/home/home.context';
-interface DatabaseSelectModalProps {
+interface SelectDatabaseModalProps {
   onClose: () => void;
   onSelectDatabase: (database: string) => void;
 }
 
-export const DatabaseSelectModal: React.FC<DatabaseSelectModalProps> = ({
+export const SelectDatabaseModal: React.FC<SelectDatabaseModalProps> = ({
   onClose,
   onSelectDatabase,
 }) => {

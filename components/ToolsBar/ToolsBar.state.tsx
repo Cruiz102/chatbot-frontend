@@ -5,7 +5,7 @@ export interface ToolsInitialState {
   filteredPrompts: Prompt[];
 }
 
-export const initialState: ToolsbarInitialState = {
+export const initialState: ToolsInitialState = {
   searchTerm: '',
   filteredPrompts: [],
 };

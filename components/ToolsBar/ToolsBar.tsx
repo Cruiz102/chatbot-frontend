@@ -13,12 +13,15 @@ import HomeContext from '@/pages/api/home/home.context';
 import { PromptFolders } from './components/PromptTab/PromptFolders';
 import { PromptbarSettings } from './components/PromptTab/PromptbarSettings';
 import { Prompts } from './components/PromptTab/Prompts';
-
+import PromptsTab from './components/PromptTab/PromptTab';
 import Sidebar from '../Sidebar';
 import SidebarTabs from '../Sidebar/SidebarTabs';
+import TabConfig from '../Sidebar/SidebarTabs';
 
-import PromptbarContext from './ToolsBar.context';
-import { PromptbarInitialState, initialState } from './ToolsBar.state';
+
+import DatabaseTab from './components/DatabaseTab/DataBaseTabContent'
+import ToolsbarContext from './ToolsBar.context';
+import { ToolsInitialState, initialState } from './ToolsBar.state';
 import { Databases } from './components/DatabaseTab/Databases';
 import { v4 as uuidv4 } from 'uuid';
 import { Databaseclasses } from '@/types/databaseItem';
@@ -30,7 +33,7 @@ const ToolsbBar = () => {
   // ---------------------------------------------------------
   // ------------PROMPT HANDLERERS----------------------------
   // ---------------------------------------------------------
-  const promptBarContextValue = useCreateReducer<PromptbarInitialState>({
+  const promptBarContextValue = useCreateReducer<ToolsInitialState>({
     initialState,
   });
 
@@ -129,21 +132,42 @@ const ToolsbBar = () => {
   // ------------DATABASE HANDLERERS----------------------------
   // ---------------------------------------------------------
 
-  const [filteredDatabases, setFilteredDatabases] = useState<DatabaseItem[]>([]);
+  const [filteredDatabases, setFilteredDatabases] = useState<Databaseclasses[]>([]);
   useEffect(() => {
     // Filter logic
-    const newFilteredDatabases = DatabaseItems.filter((databaseItem) => {
+    const newFilteredDatabases = Databaseclasses.filter((databaseItem) => {
       const searchable = databaseItem.name.toLowerCase() + ' ' + databaseItem.name.toLowerCase();
       return searchable.includes(searchTerm.toLowerCase());
     });
 
     // Update the state
     setFilteredDatabases(newFilteredDatabases);
-  }, [searchTerm, DatabaseItems]);
+  }, [searchTerm, Databaseclasses]);
 
+
+
+
+
+  // ---------------------------------------------------------
+  // ------------TABS HANDLERERS----------------------------
+  // ---------------------------------------------------------
+
+
+// Define the configuration for each tab
+const tabsConfig = [
+  {
+    title: 'Chats',
+    components: [<PromptsTab />], // Array of components for the Chats tab
+  },
+  {
+    title: 'Database',
+    components: [<DatabaseTab />], // Array of components for the Database tab
+  },
+  // ... more tabs ...
+];
 
   return (
-    <PromptbarContext.Provider
+    <ToolsbarContext.Provider
       value={{
         ...promptBarContextValue,
         handleCreatePrompt,
@@ -151,23 +175,13 @@ const ToolsbBar = () => {
         handleUpdatePrompt,
       }}
     >
-      <SidebarTabs<Prompt>
+      <SidebarTabs
         side={'right'}
         isOpen={showPromptbar}
         addItemButtonTitle={t('New prompt')}
-        itemComponent={
-          <Prompts
-            prompts={filteredPrompts.filter((prompt) => !prompt.folderId)}
-          />
-        }
-        databaseComponent={
-          <Databases
-          databases={filteredDatabases}
-      
-          />
-        }
-        folderComponent={<PromptFolders />}
-        items={filteredPrompts}
+        tabs={tabsConfig}
+        
+
         searchTerm={searchTerm}
         handleSearchTerm={(searchTerm: string) =>
           promptDispatch({ field: 'searchTerm', value: searchTerm })
@@ -177,7 +191,7 @@ const ToolsbBar = () => {
         handleCreateFolder={() => handleCreateFolder(t('New folder'), 'prompt')}
         handleDrop={handleDrop}
       />
-    </PromptbarContext.Provider>
+    </ToolsbarContext.Provider>
   );
 };
 
