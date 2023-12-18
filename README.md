@@ -1,39 +1,20 @@
 # Chatbot UI
 
-## News
-
-Chatbot UI 2.0 is out as an updated, hosted product!
-
-Check out [Takeoff Chat](https://www.takeoffchat.com/).
-
-Open source version coming soon!
+This is a forked repository of the project [chatbot-ui](https://github.com/mckaywrigley/chatbot-ui.git). The reason 
+for doing this forked is for adding more functionalities to the repository. Currently I'm working on adding a database 
+functionality, to which we can connect and implement RAG in a user friendly way. Currently I'm implementing a weaviate 
+database but in the future I would want to have implementation for connecting to different Cloud Storages e.g OneDrive , Google  Drive,
+Notion. I would also like to integrate other open Source features like [Open-interpreter](https://github.com/KillianLucas/open-interpreter),  [Autogen](https://github.com/microsoft/autogen.git), [ActionWeaver](https://github.com/TengHu/ActionWeaver), and local LLM integrations probably connecting to [LMStudio](https://lmstudio.ai/).
 
 ## About
 
 Chatbot UI is an open source chat UI for AI models.
 
-See a [demo](https://twitter.com/mckaywrigley/status/1640380021423603713?s=46&t=AowqkodyK6B4JccSOxSPew).
 
 ![Chatbot UI](./public/screenshots/screenshot-0402023.jpg)
 
-## Updates
-
-Chatbot UI will be updated over time.
-
-Expect frequent improvements.
-
-**Next up:**
-
-- [ ] Sharing
-- [ ] "Bots"
 
 ## Deploy
-
-**Vercel**
-
-Host your own live version of Chatbot UI with Vercel.
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fmckaywrigley%2Fchatbot-ui)
 
 **Docker**
 
@@ -107,9 +88,3 @@ When deploying the application, the following environment variables can be set:
 If you do not provide an OpenAI API key with `OPENAI_API_KEY`, users will have to provide their own key.
 
 If you don't have an OpenAI API key, you can get one [here](https://platform.openai.com/account/api-keys).
-
-## Contact
-
-If you have any questions, feel free to reach out to Mckay on [Twitter](https://twitter.com/mckaywrigley).
-
-[GCSE]: https://developers.google.com/custom-search/v1/overview

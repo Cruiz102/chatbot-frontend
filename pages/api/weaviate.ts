@@ -14,7 +14,7 @@ import { Tiktoken, init } from '@dqbd/tiktoken/lite/init';
 export const config = {
   runtime: 'edge',
 };
-
+// A Temporal Implementation. Ideally this should resemble the google.ts file.
 const handler = async (req: Request): Promise<Response> => {
   try {
     const { model, messages, key, prompt, temperature ,

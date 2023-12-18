@@ -42,6 +42,7 @@ const DatabaseTab: React.FC = () => {
       <button onClick={handleCreateSchema} /* style object */>
         <IconSchema />
       </button>
+      
 
       {/* Database Popup */}
       {showDatabasePopup && (
