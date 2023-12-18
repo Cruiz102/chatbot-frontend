@@ -28,22 +28,17 @@ const DatabaseTab: React.FC = () => {
 
   return (
     <div>
-      {/* Database Button */}
-      <button onClick={() => setShowDatabasePopup(true)} /* style object */>
-        <IconDatabase />
+      <button
+        className="flex justify-center items-center w-full px-4 py-2 my-2 mx-auto
+                   text-white border-b border-white/20 pb-2 rounded-md border 
+                   hover:bg-gray-500/10"
+        onClick={() => setShowDatabasePopup(true)}
+      >
+        <IconDatabase size={24} />
       </button>
+  
 
-      {/* Add Document Button */}
-      <button onClick={handleAddDocument} /* style object */>
-        <IconFilePlus />
-      </button>
-
-      {/* Schema Creation Button */}
-      <button onClick={handleCreateSchema} /* style object */>
-        <IconSchema />
-      </button>
-      
-
+  
       {/* Database Popup */}
       {showDatabasePopup && (
         <SelectDatabaseModal
@@ -52,7 +47,22 @@ const DatabaseTab: React.FC = () => {
           onSelectDatabase={handleSelectDatabase}
         />
       )}
-
+  
+      {/* Separate Row for the Last Two Buttons */}
+      {showDatabasePopup && (
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
+          {/* Add Document Button */}
+          <button onClick={handleAddDocument} /* style object */>
+            <IconFilePlus />
+          </button>
+  
+          {/* Schema Creation Button */}
+          <button onClick={handleCreateSchema} /* style object */>
+            <IconSchema />
+          </button>
+        </div>
+      )}
+  
       {/* Schema Creation Modal */}
       {showSchemaModal && (
         <SchemaCreationModal
@@ -62,6 +72,7 @@ const DatabaseTab: React.FC = () => {
       )}
     </div>
   );
+  
 };
 
 export default DatabaseTab;

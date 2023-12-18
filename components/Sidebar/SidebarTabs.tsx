@@ -92,11 +92,11 @@ const SidebarTabs = ({
           key={tab.title}
           style={{
             border: 'none',
-            padding: '10px 20px',
+            padding: '8px 12px', // Adjust the padding to make tabs narrower
             borderRadius: '5px',
             cursor: 'pointer',
-            backgroundColor: activeTab === tab ? '#4CAF50' : '#f7f7f7',
-            color: activeTab === tab ? 'white' : 'black',
+            backgroundColor: activeTab === tab ? '#4CAF50' : 'transparent', // Set background color to transparent
+            color: 'white' ,
             fontWeight: 'bold',
             boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
             transition: 'background-color 0.3s ease',
@@ -108,6 +108,7 @@ const SidebarTabs = ({
       ))}
     </div>
   );
+  
 
   const renderTabContent = () => {
     const activeTabConfig = tabs.find(tab => tab.title === activeTab.title);
@@ -122,6 +123,8 @@ const SidebarTabs = ({
   
 
   return isOpen ? (
+    <div
+    className={`fixed top-0 ${side}-0 z-40 flex h-full w-[260px] flex-none flex-col space-y-2 bg-[#202123] p-2 text-[14px] transition-all sm:relative sm:top-0`}>
     <div className={`sidebar ${side} ${isOpen ? 'open' : 'closed'}`}>
       <div className="sidebar-header">
         {renderTabHeader()}
@@ -140,6 +143,7 @@ const SidebarTabs = ({
       
 
 
+    </div>
     </div>
   ) : (
     <OpenSidebarButton onClick={toggleOpen} side={side} />
