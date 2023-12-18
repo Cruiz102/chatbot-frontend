@@ -5,11 +5,13 @@ import HomeContext from '@/pages/api/home/home.context';
 interface SelectDatabaseModalProps {
   onClose: () => void;
   onSelectDatabase: (database: string) => void;
+  databasesNames: string[];
 }
 
 export const SelectDatabaseModal: React.FC<SelectDatabaseModalProps> = ({
   onClose,
   onSelectDatabase,
+  databasesNames,
 }) => {
   const { t } = useTranslation('sidebar');
   const modalRef = useRef<HTMLDivElement>(null);

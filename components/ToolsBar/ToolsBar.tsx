@@ -157,7 +157,23 @@ const ToolsbBar = () => {
 const tabsConfig = [
   {
     title: 'Chats',
-    components: [<PromptsTab />], // Array of components for the Chats tab
+    components: [<PromptsTab 
+      addItemButtonTitle={t('New prompt')}
+      searchTerm={searchTerm}
+      handleSearchTerm={(searchTerm: string) =>
+        promptDispatch({ field: 'searchTerm', value: searchTerm })
+      }
+      handleCreateFolder={() => handleCreateFolder(t('New folder'), 'prompt')}
+      handleCreateItem={handleCreatePrompt}
+      handleDrop={handleDrop}
+      items={filteredPrompts}
+      itemComponent={
+        <Prompts
+          prompts={filteredPrompts.filter((prompt) => !prompt.folderId)}
+        />
+      }
+      folderComponent={<PromptFolders />}
+    />], // Array of components for the Chats tab
   },
   {
     title: 'Database',
