@@ -28,9 +28,6 @@ export interface WeaviateCredentials {
   className: string; 
 }
 
-// Existing or new union type for all plugins
-export type AnyPlugin = Plugin | WeaviatePlugin;  // Add WeaviatePlugin to the union
-
 // New type for Plugin with Weaviate
 export type WeaviatePlugin = {
   id: PluginID.WEAVIATE_SEARCH;
@@ -71,4 +68,40 @@ export const Plugins: Record<PluginID, Plugin> = {
   },
 };
 
+export const PluginKeys: Record<PluginID, PluginKey> = {
+  [PluginID.GOOGLE_SEARCH]: {
+    pluginId: PluginID.GOOGLE_SEARCH,
+    requiredKeys: [
+      {
+        key: 'GOOGLE_API_KEY',
+        value: '',
+      },
+      {
+        key: 'GOOGLE_CSE_ID',
+        value: '',
+      },
+    ],
+  },
+  [PluginID.WEAVIATE_SEARCH]: {  // New entry for Weaviate
+    pluginId: PluginID.WEAVIATE_SEARCH,
+    requiredKeys: [
+      {
+        key: 'WEAVIATE_URL',
+        value: '',
+      },
+      {
+        key: 'WEAVIATE_API_KEY',
+        value: '',
+      },
+      { key: 'CLASS_NAME', 
+        value: '' }, 
+    ],
+  },
+};
+
 export const PluginList = Object.values(Plugins);
+export const PluginKeysList = Object.values(PluginKeys);
+console.log(PluginList)
+
+
+

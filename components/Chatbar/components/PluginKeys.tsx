@@ -123,23 +123,7 @@ export const PluginKeys = () => {
 
                           handlePluginKeyChange(updatedPluginKey);
                         }
-                      } else {
-                        const newPluginKey: PluginKey = {
-                          pluginId: PluginID.GOOGLE_SEARCH,
-                          requiredKeys: [
-                            {
-                              key: 'GOOGLE_API_KEY',
-                              value: e.target.value,
-                            },
-                            {
-                              key: 'GOOGLE_CSE_ID',
-                              value: '',
-                            },
-                          ],
-                        };
-
-                        handlePluginKeyChange(newPluginKey);
-                      }
+                      } 
                     }}
                   />
 
@@ -182,23 +166,7 @@ export const PluginKeys = () => {
 
                           handlePluginKeyChange(updatedPluginKey);
                         }
-                      } else {
-                        const newPluginKey: PluginKey = {
-                          pluginId: PluginID.GOOGLE_SEARCH,
-                          requiredKeys: [
-                            {
-                              key: 'GOOGLE_API_KEY',
-                              value: '',
-                            },
-                            {
-                              key: 'GOOGLE_CSE_ID',
-                              value: e.target.value,
-                            },
-                          ],
-                        };
-
-                        handlePluginKeyChange(newPluginKey);
-                      }
+                      } 
                     }}
                   />
 
@@ -267,27 +235,10 @@ export const PluginKeys = () => {
 
                           handlePluginKeyChange(updatedPluginKey);
                         }
-                      } else {
-                        const newPluginKey: PluginKey = {
-                          pluginId: PluginID.WEAVIATE_SEARCH,
-                          requiredKeys: [
-                            {
-                              key: 'WEAVIATE_URL',
-                              value: e.target.value,
-                            },
-                            {
-                              key: 'WEAVIATE_API_KEY',
-                              value: '',
-                            },
-                            {
-                              key: 'CLASS_NAME',
-                              value: '',
-                            },
-                          ],
-                        };
-
-                        handlePluginKeyChange(newPluginKey);
-                      }
+                        //  Adding this else in the case that 
+                        //  the PluginKey was not found so in that
+                        //  case we build it for the first time.
+                      } 
                     }}
                   />
 
@@ -330,27 +281,7 @@ export const PluginKeys = () => {
 
                           handlePluginKeyChange(updatedPluginKey);
                         }
-                      } else {
-                        const newPluginKey: PluginKey = {
-                          pluginId: PluginID.WEAVIATE_SEARCH,
-                          requiredKeys: [
-                            {
-                              key: 'WEAVIATE_URL',
-                              value: '',
-                            },
-                            {
-                              key: 'WEAVIATE_API_KEY',
-                              value: e.target.value,
-                            },
-                            {
-                              key: 'CLASS_NAME',
-                              value: '',
-                            },
-                          ],
-                        };
-
-                        handlePluginKeyChange(newPluginKey);
-                      }
+                      } 
                     }}
 
                     
@@ -395,27 +326,7 @@ export const PluginKeys = () => {
 
                           handlePluginKeyChange(updatedPluginKey);
                         }
-                      } else {
-                        const newPluginKey: PluginKey = {
-                          pluginId: PluginID.WEAVIATE_SEARCH,
-                          requiredKeys: [
-                            {
-                              key: 'WEAVIATE_URL',
-                              value: '',
-                            },
-                            {
-                              key: 'WEAVIATE_API_KEY',
-                              value: '',
-                            },
-                            {
-                              key: 'CLASS_NAME',
-                              value: e.target.value,
-                            },
-                          ],
-                        };
-
-                        handlePluginKeyChange(newPluginKey);
-                      }
+                      } 
                     }}
 
                     

@@ -3,7 +3,7 @@ import { DatabaseClass, DatabaseItem,  } from '@/types/database';
 import { ErrorMessage } from '@/types/error';
 import { FolderInterface } from '@/types/folder';
 import { AIModel, OpenAIModelID } from '@/types/openai';
-import { PluginKey } from '@/types/plugin';
+import { PluginKey, PluginKeysList } from '@/types/plugin';
 import { Prompt } from '@/types/prompt';
 
 export interface HomeInitialState {
@@ -35,7 +35,7 @@ export interface HomeInitialState {
 export const initialState: HomeInitialState = {
   apiKey: '',
   loading: false,
-  pluginKeys: [],
+  pluginKeys: PluginKeysList,
   lightMode: 'dark',
   messageIsStreaming: false,
   modelError: null,
