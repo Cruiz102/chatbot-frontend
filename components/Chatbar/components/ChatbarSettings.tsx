@@ -12,7 +12,7 @@ import { Key } from '../../Settings/Key';
 import { SidebarButton } from '../../Sidebar/SidebarButton';
 import ChatbarContext from '../Chatbar.context';
 import { ClearConversations } from './ClearConversations';
-import { PluginKeys } from './PluginKeys';
+import { PluginKeys } from './Plugins/PluginKeys';
 
 export const ChatbarSettings = () => {
   const { t } = useTranslation('sidebar');
