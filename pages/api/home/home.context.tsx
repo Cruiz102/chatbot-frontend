@@ -7,6 +7,7 @@ import { KeyValuePair } from '@/types/data';
 import { FolderType } from '@/types/folder';
 
 import { HomeInitialState } from './home.state';
+import { AIModel } from '@/types/llmModel';
 
 export interface HomeContextProps {
   state: HomeInitialState;
@@ -16,6 +17,7 @@ export interface HomeContextProps {
   handleDeleteFolder: (folderId: string) => void;
   handleUpdateFolder: (folderId: string, name: string) => void;
   handleSelectConversation: (conversation: Conversation) => void;
+  handleAddLocalModel: (newModel: AIModel) => void;
   handleUpdateConversation: (
     conversation: Conversation,
     data: KeyValuePair,

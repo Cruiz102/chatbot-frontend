@@ -1,4 +1,5 @@
 import React, { useState, FC } from 'react';
+import { AIModel } from '@/types/llmModel';
 
 interface LocalModelPopupProps {
   onClose: () => void;
@@ -9,16 +10,16 @@ const LocalModelPopup: FC<LocalModelPopupProps> = ({ onClose, onSubmit }) => {
   const [modelName, setModelName] = useState<string>('');
   const [maxLength, setMaxLength] = useState<number>(0);
   const [tokenLimit, setTokenLimit] = useState<number>(0);
-  const [category, setCategory] = useState<'finetuned' | 'OpenAI' | 'local'>('local');
-
+  const [ApiURL, setApiURL] = useState<string>('');
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const newModel = {
+    const newModel: AIModel = {
       id: modelName.replace(/\s+/g, '-').toLowerCase(), // Generate an ID from the model name
       name: modelName,
-      maxLength,
-      tokenLimit,
-      category,
+      maxLength: maxLength, // Assuming you have a maxLength defined somewhere
+      tokenLimit: tokenLimit, // Assuming you have a tokenLimit defined somewhere
+      category: 'local', // This must match the type definition
+      ApiURL: ApiURL, // Assuming you have an ApiURL defined somewhere
     };
     onSubmit(newModel);
     onClose();
@@ -68,15 +69,15 @@ const LocalModelPopup: FC<LocalModelPopupProps> = ({ onClose, onSubmit }) => {
             />
           </div>
 
-          {/* Model Name */}
+          {/* API URL */}
           <div className="mb-4">
             <label htmlFor="modelName" className="block text-sm font-medium text-gray-700">API URL</label>
             <input
               type="text"
-              id="modelName"
+              id="ApiURL"
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm text-gray-700"
-              value={modelName}
-              onChange={(e) => setModelName(e.target.value)}
+              value={ApiURL}
+              onChange={(e) => setApiURL(e.target.value)}
               required
             />
           </div>

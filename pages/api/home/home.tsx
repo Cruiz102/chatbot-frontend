@@ -24,6 +24,7 @@ import {
 import { saveFolders } from '@/utils/app/folders';
 import { savePrompts } from '@/utils/app/prompts';
 import { getSettings } from '@/utils/app/settings';
+import { filterOpenAIModels, saveModels } from '@/utils/app/models';
 
 import { Conversation } from '@/types/chat';
 import { KeyValuePair } from '@/types/data';
@@ -41,6 +42,7 @@ import { HomeInitialState, initialState } from './home.state';
 
 import { v4 as uuidv4 } from 'uuid';
 import ToolsBar from '@/components/ToolsBar';
+import { AIModel } from '@/types/llmModel';
 
 interface Props {
   serverSideApiKeyIsSet: boolean;
@@ -70,6 +72,7 @@ const Home = ({
       conversations,
       selectedConversation,
       prompts,
+      models,
       temperature,
     },
     dispatch,
@@ -98,6 +101,11 @@ const Home = ({
 
   useEffect(() => {
     dispatch({ field: 'modelError', value: getModelsError(error) });
+
+    // When rendering home  and the openai key was incorrect
+    // we want to to remove it.
+    dispatch({field: 'models', value: filterOpenAIModels(models)})
+
   }, [dispatch, error, getModelsError]);
 
   // FETCH MODELS ----------------------------------------------
@@ -226,6 +234,19 @@ const Home = ({
     dispatch({ field: 'conversations', value: all });
   };
 
+  // MODELS OPERATIONS -----------------------------------
+
+
+  const handleAddLocalModel = (
+    newModel: AIModel
+  ) => {
+    dispatch( {field: 'models', value: [...models, newModel] });
+
+    saveModels(models);
+  }
+
+
+
   // EFFECTS  --------------------------------------------
 
   useEffect(() => {
@@ -298,6 +319,11 @@ const Home = ({
       dispatch({ field: 'folders', value: JSON.parse(folders) });
     }
 
+    const models = localStorage.getItem('models');
+    if(models) {
+      dispatch({field: 'models', value: JSON.parse(models)})
+    }
+
     const prompts = localStorage.getItem('prompts');
     if (prompts) {
       dispatch({ field: 'prompts', value: JSON.parse(prompts) });
@@ -358,6 +384,7 @@ const Home = ({
         handleUpdateFolder,
         handleSelectConversation,
         handleUpdateConversation,
+        handleAddLocalModel
       }}
     >
       <Head>

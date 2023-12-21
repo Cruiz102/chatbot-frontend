@@ -2,7 +2,8 @@ import { Conversation, Message } from '@/types/chat';
 import { DatabaseClass, DatabaseItem,  } from '@/types/database';
 import { ErrorMessage } from '@/types/error';
 import { FolderInterface } from '@/types/folder';
-import { AIModel, OpenAIModelID } from '@/types/openai';
+import { OpenAIModelID } from '@/types/openai';
+import { AIModel } from '@/types/llmModel';
 import { PluginKey, PluginKeysList } from '@/types/plugin';
 import { Prompt } from '@/types/prompt';
 

@@ -13,12 +13,12 @@ export interface PluginKey {
 
 export enum PluginID {
   GOOGLE_SEARCH = 'google-search',
-  WEAVIATE_SEARCH = 'weaviate-search',  // New enum value for Weaviate
+  WEAVIATE_SEARCH = 'weaviate-search',  
 }
 
 export enum PluginName {
   GOOGLE_SEARCH = 'Google Search',
-  WEAVIATE_SEARCH = 'Weaviate Search',  // New enum value for Weaviate
+  WEAVIATE_SEARCH = 'Weaviate Search',  
 }
 
 // New interface for Weaviate credentials

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { IconExternalLink, IconPlus } from '@tabler/icons-react';
 import { useContext } from 'react';
 import { useTranslation } from 'next-i18next';
-import { AIModel } from '@/types/openai';
+import { AIModel } from '@/types/llmModel';
 import HomeContext from '@/pages/api/home/home.context';
 import LocalModelPopup from './localModelPopup';
 
@@ -13,6 +13,7 @@ export const ModelSelect = () => {
   const {
     state: { selectedConversation, models, defaultModelId },
     handleUpdateConversation,
+    handleAddLocalModel,
     dispatch: homeDispatch,
   } = useContext(HomeContext);
 
@@ -27,6 +28,7 @@ export const ModelSelect = () => {
         });
     }
   };
+
 
 
   const isDisabled = models.length === 0;
@@ -84,6 +86,7 @@ export const ModelSelect = () => {
       {isLocalModelPopupVisible && (
         <LocalModelPopup
           onClose={() => setLocalModelPopupVisible(false)}
+          onSubmit={handleAddLocalModel}
         />
       )}
     </div>
