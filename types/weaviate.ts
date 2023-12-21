@@ -6,21 +6,6 @@ export interface WeaviateBody extends ChatBody {
   className: string;
 }
 
-export interface GoogleResponse {
-  message: Message;
-}
-
-export interface GoogleSource {
-  title: string;
-  link: string;
-  displayLink: string;
-  snippet: string;
-  image: string;
-  text: string;
-}
-
-
-
 export interface WeaviateProperty {
   dataType: string[];
   description: string;

@@ -48,7 +48,7 @@ export const ChatInput = ({
   const { t } = useTranslation('chat');
 
   const {
-    state: { selectedConversation, messageIsStreaming, prompts },
+    state: { selectedConversation, messageIsStreaming, prompts, models },
 
     dispatch: homeDispatch,
   } = useContext(HomeContext);
@@ -64,6 +64,7 @@ export const ChatInput = ({
   const [plugin, setPlugin] = useState<Plugin | null>(null);
 
   const promptListRef = useRef<HTMLUListElement | null>(null);
+  const isTextareaDisabled = models.length === 0;
 
   const filteredPrompts = prompts.filter((prompt) =>
     prompt.name.toLowerCase().includes(promptInputValue.toLowerCase()),
@@ -256,6 +257,16 @@ export const ChatInput = ({
     };
   }, []);
 
+
+  const placeholderStyle = `
+  .${isTextareaDisabled ? 'textarea-disabled' : 'textarea-normal'}::placeholder {
+    color: ${isTextareaDisabled ? '#ff0000' : '#1a202c'};
+  }
+`;
+
+
+
+
   return (
     <div className="absolute bottom-0 left-0 w-full border-transparent bg-gradient-to-b from-transparent via-white to-white pt-6 dark:border-white/20 dark:via-[#343541] dark:to-[#343541] md:pt-2">
       <div className="stretch mx-2 mt-4 flex flex-row gap-3 last:mb-2 md:mx-4 md:mt-[52px] md:last:mb-6 lg:mx-auto lg:max-w-3xl">
@@ -284,6 +295,7 @@ export const ChatInput = ({
             className="absolute left-2 top-2 rounded-sm p-1 text-neutral-800 opacity-60 hover:bg-neutral-200 hover:text-neutral-900 dark:bg-opacity-50 dark:text-neutral-100 dark:hover:text-neutral-200"
             onClick={() => setShowPluginSelect(!showPluginSelect)}
             onKeyDown={(e) => {}}
+            disabled= {isTextareaDisabled}
           >
             {plugin ? <IconBrandGoogle size={20} /> : <IconBolt size={20} />}
           </button>
@@ -311,11 +323,25 @@ export const ChatInput = ({
             </div>
           )}
 
+          <>
+          <style>
+        {`
+          .textarea-normal::placeholder {
+            color: #1a202c; /* Color for normal placeholder */
+          }
+          .textarea-disabled::placeholder {
+            color: #ff0000; /* Color for disabled placeholder */
+          }
+        `}
+      </style>
+
           <textarea
             ref={textareaRef}
-            className="m-0 w-full resize-none border-0 bg-transparent p-0 py-2 pr-8 pl-10 text-black dark:bg-transparent dark:text-white md:py-3 md:pl-10"
+            className={`m-0 w-full resize-none border-0 bg-transparent p-0 py-2 pr-8 pl-10 
+                        text-black dark:bg-transparent dark:text-white md:py-3 md:pl-10 `}
             style={{
               resize: 'none',
+              
               bottom: `${textareaRef?.current?.scrollHeight}px`,
               maxHeight: '400px',
               overflow: `${
@@ -329,11 +355,14 @@ export const ChatInput = ({
             }
             value={content}
             rows={1}
+            disabled={isTextareaDisabled}
             onCompositionStart={() => setIsTyping(true)}
             onCompositionEnd={() => setIsTyping(false)}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
           />
+
+          </>
 
           <button
             className="absolute right-2 top-2 rounded-sm p-1 text-neutral-800 opacity-60 hover:bg-neutral-200 hover:text-neutral-900 dark:bg-opacity-50 dark:text-neutral-100 dark:hover:text-neutral-200"
