@@ -38,6 +38,21 @@ const useApiService = () => {
     [fetchService],
   );
 
+
+
+  const getWeaviateDatabase = useCallback(
+    (params: GetModelsRequestProps, signal?: AbortSignal) => {
+      return fetchService.post<GetModelsRequestProps>(`/api/weaviate_database`, {
+        body: { key: params.key },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        signal,
+      });
+    },
+    [fetchService],
+  );
+
   return {
     getModels,
   };

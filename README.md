@@ -1,7 +1,7 @@
 # Chatbot UI
 
 This is a forked repository of the project [chatbot-ui](https://github.com/mckaywrigley/chatbot-ui.git). The reason 
-for doing this forked is for adding more functionalities to the repository. Currently I'm working on adding a database 
+for doing this fork is for adding more functionalities to the repository. Currently I'm working on adding a database 
 functionality, to which we can connect and implement RAG in a user friendly way. Currently I'm implementing a weaviate 
 database but in the future I would want to have implementation for connecting to different Cloud Storages e.g OneDrive , Google  Drive,
 Notion. I would also like to integrate other open Source features like [Open-interpreter](https://github.com/KillianLucas/open-interpreter),  [Autogen](https://github.com/microsoft/autogen.git), [ActionWeaver](https://github.com/TengHu/ActionWeaver), and local LLM integrations probably connecting to [LMStudio](https://lmstudio.ai/).

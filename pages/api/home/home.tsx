@@ -72,6 +72,7 @@ const Home = ({
       conversations,
       selectedConversation,
       prompts,
+      pluginKeys,
       models,
       temperature,
     },
@@ -80,6 +81,7 @@ const Home = ({
 
   const stopConversationRef = useRef<boolean>(false);
 
+// Get the OpenAiModels from the OpenAIKey 
   const { data, error, refetch } = useQuery(
     ['GetModels', apiKey, serverSideApiKeyIsSet],
     ({ signal }) => {
@@ -94,6 +96,24 @@ const Home = ({
     },
     { enabled: true, refetchOnMount: false },
   );
+
+
+  // Get the Weviate Class information
+  // const weviate_plugin = pluginKeys.find((plugin) => plugin.pluginId  == "weaviate-search");
+  // const {weaviate_classes, error, refetch } = useQuery(
+  //   ['GetWeaviateClasses', apiKey, serverSideApiKeyIsSet],
+  //   ({ signal }) => {
+  //     if (!apiKey && !serverSideApiKeyIsSet) return null;
+
+  //     return getModels(
+  //       {
+  //         key: apiKey,
+  //       },
+  //       signal,
+  //     );
+  //   },
+  //   { enabled: true, refetchOnMount: false },
+  // );
 
   useEffect(() => {
     if (data) dispatch({ field: 'models', value: data });
