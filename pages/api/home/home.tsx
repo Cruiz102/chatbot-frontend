@@ -32,6 +32,7 @@ import { FolderInterface, FolderType } from '@/types/folder';
 import { OpenAIModelID, OpenAIModels, fallbackModelID } from '@/types/openai';
 import { Prompt } from '@/types/prompt';
 
+
 import { Chat } from '@/components/Chat/Chat';
 import { Chatbar } from '@/components/Chatbar/Chatbar';
 import { Navbar } from '@/components/Mobile/Navbar';
@@ -43,20 +44,23 @@ import { HomeInitialState, initialState } from './home.state';
 import { v4 as uuidv4 } from 'uuid';
 import ToolsBar from '@/components/ToolsBar';
 import { AIModel } from '@/types/llmModel';
+import { PluginKey, PluginKeysList } from '@/types/plugin';
 
 interface Props {
   serverSideApiKeyIsSet: boolean;
   serverSidePluginKeysSet: boolean;
   defaultModelId: OpenAIModelID;
+  // pluginList: PluginKey[]
 }
 
 const Home = ({
   serverSideApiKeyIsSet,
   serverSidePluginKeysSet,
   defaultModelId,
+  // pluginList
 }: Props) => {
   const { t } = useTranslation('chat');
-  const { getModels } = useApiService();
+  const { getModels , getWeaviateCollection} = useApiService();
   const { getModelsError } = useErrorService();
   const [initialRender, setInitialRender] = useState<boolean>(true);
 
@@ -98,23 +102,34 @@ const Home = ({
   );
 
 
-  // Get the Weviate Class information
-  // const weviate_plugin = pluginKeys.find((plugin) => plugin.pluginId  == "weaviate-search");
-  // const {weaviate_classes, error, refetch } = useQuery(
-  //   ['GetWeaviateClasses', apiKey, serverSideApiKeyIsSet],
-  //   ({ signal }) => {
-  //     if (!apiKey && !serverSideApiKeyIsSet) return null;
+  
+  //Load the initial pluginkeys with empty values to the Home state
+  // useEffect(() => {
+  //   if (pluginList) dispatch({ field: 'pluginKeys', value: pluginList });
+  // }, [data, dispatch]);
 
-  //     return getModels(
-  //       {
-  //         key: apiKey,
-  //       },
-  //       signal,
-  //     );
-  //   },
-  //   { enabled: true, refetchOnMount: false },
-  // );
+  console.log(  pluginKeys);
+  console.log("faqfas")
+  console.log("Is Array:", Array.isArray(pluginKeys));
+  console.log("Is Array:", Array.isArray(models));
+  console.log(pluginKeys[1].requiredKeys[0].value)
+  const weaviatePlugin = pluginKeys?.find((plugin) => plugin.pluginId  === "weaviate-search");
+  const weaviateUrl = weaviatePlugin?.requiredKeys.find(keyPair => keyPair.key === 'WEAVIATE_URL')?.value; // Find the required key for WEAVIATE_URL
+  const weaviateApiKey = weaviatePlugin?.requiredKeys.find(keyPair => keyPair.key === 'WEAVIATE_API_KEY')?.value; // Find the required key for WEAVIATE_URL
 
+  
+  const { data: weaviateClasses, error: queryError, isLoading } = useQuery(
+    ['GetWeaviateClasses', weaviateApiKey, weaviateUrl],
+    ({ signal }) => getWeaviateCollection({
+      key: weaviateApiKey,
+      url: weaviateUrl
+    }, signal),
+    { enabled: !!weaviateApiKey && !!weaviateUrl, refetchOnMount: false }
+  );
+
+
+  console.log(weaviateClasses, queryError);
+  
   useEffect(() => {
     if (data) dispatch({ field: 'models', value: data });
   }, [data, dispatch]);
@@ -316,7 +331,7 @@ const Home = ({
       dispatch({ field: 'pluginKeys', value: [] });
       localStorage.removeItem('pluginKeys');
     } else if (pluginKeys) {
-      dispatch({ field: 'pluginKeys', value: pluginKeys });
+      dispatch({ field: 'pluginKeys', value: JSON.parse(pluginKeys) });
     }
 
     if (window.innerWidth < 640) {
@@ -459,12 +474,13 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
 
   const weaviateURL = process.env.WEAVIATE_URL
   const weaviateAPI = process.env.WEAVIATE_API_KEY
-  const weaviateClass = process.env.CLASS_NAME
+
+  // const pluginList = PluginKeysList;
 
   if (googleApiKey && googleCSEId) {
     serverSidePluginKeysSet = true;
   }
-  if(weaviateURL && weaviateAPI && weaviateClass){
+  if(weaviateURL && weaviateAPI){
     serverSidePluginKeysSet = true;
   }
 
@@ -473,6 +489,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
       serverSideApiKeyIsSet: !!process.env.OPENAI_API_KEY,
       defaultModelId,
       serverSidePluginKeysSet,
+      
       ...(await serverSideTranslations(locale ?? 'en', [
         'common',
         'chat',

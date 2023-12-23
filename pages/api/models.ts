@@ -1,6 +1,7 @@
 import { OPENAI_API_HOST, OPENAI_API_TYPE, OPENAI_API_VERSION, OPENAI_ORGANIZATION } from '@/utils/app/const';
 
-import { AIModel, OpenAIModelID, OpenAIModels } from '@/types/openai';
+import { OpenAIModelID, OpenAIModels } from '@/types/openai';
+import { AIModel } from '@/types/llmModel';
 
 export const config = {
   runtime: 'edge',

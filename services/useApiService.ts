@@ -5,6 +5,10 @@ import { useFetch } from '@/hooks/useFetch';
 export interface GetModelsRequestProps {
   key: string;
 }
+export interface GetWeaviateCollectionRequestProps{
+  key: string,
+  url: string
+}
 
 const useApiService = () => {
   const fetchService = useFetch();
@@ -37,24 +41,22 @@ const useApiService = () => {
     },
     [fetchService],
   );
+  
 
-
-
-  const getWeaviateDatabase = useCallback(
-    (params: GetModelsRequestProps, signal?: AbortSignal) => {
-      return fetchService.post<GetModelsRequestProps>(`/api/weaviate_database`, {
-        body: { key: params.key },
-        headers: {
-          'Content-Type': 'application/json',
-        },
+  const getWeaviateCollection = useCallback(
+    (params: GetWeaviateCollectionRequestProps, signal?: AbortSignal) => {
+      console.log("NOOOOOOO")
+      return fetchService.post<GetWeaviateCollectionRequestProps>('api/databaseRetrieval', {
+        body: {key: params.key, url: params.url},
         signal,
-      });
-    },
+    });
+  },
     [fetchService],
   );
 
   return {
     getModels,
+    getWeaviateCollection
   };
 };
 
