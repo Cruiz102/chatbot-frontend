@@ -101,7 +101,5 @@ export const PluginKeys: Record<PluginID, PluginKey> = {
 
 export const PluginList = Object.values(Plugins);
 export const PluginKeysList = Object.values(PluginKeys);
-console.log(PluginList)
-
 
 

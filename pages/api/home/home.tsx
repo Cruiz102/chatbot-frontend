@@ -108,27 +108,31 @@ const Home = ({
   //   if (pluginList) dispatch({ field: 'pluginKeys', value: pluginList });
   // }, [data, dispatch]);
 
-  console.log(  pluginKeys);
-  console.log("faqfas")
-  console.log("Is Array:", Array.isArray(pluginKeys));
-  console.log("Is Array:", Array.isArray(models));
-  console.log(pluginKeys[1].requiredKeys[0].value)
+
   const weaviatePlugin = pluginKeys?.find((plugin) => plugin.pluginId  === "weaviate-search");
   const weaviateUrl = weaviatePlugin?.requiredKeys.find(keyPair => keyPair.key === 'WEAVIATE_URL')?.value; // Find the required key for WEAVIATE_URL
   const weaviateApiKey = weaviatePlugin?.requiredKeys.find(keyPair => keyPair.key === 'WEAVIATE_API_KEY')?.value; // Find the required key for WEAVIATE_URL
 
-  
+
   const { data: weaviateClasses, error: queryError, isLoading } = useQuery(
-    ['GetWeaviateClasses', weaviateApiKey, weaviateUrl],
-    ({ signal }) => getWeaviateCollection({
-      key: weaviateApiKey,
-      url: weaviateUrl
-    }, signal),
-    { enabled: !!weaviateApiKey && !!weaviateUrl, refetchOnMount: false }
+    ['GetWeaviateClasses', weaviateApiKey, weaviateUrl, serverSideApiKeyIsSet],
+    ({ signal }) => {
+
+
+      return getWeaviateCollection(
+        {
+          key: weaviateApiKey,
+          url: weaviateUrl
+        },
+        signal,
+      );
+    },
+    { enabled: true, refetchOnMount: false },
   );
 
+  
 
-  console.log(weaviateClasses, queryError);
+  // console.log(weaviateClasses, queryError);
   
   useEffect(() => {
     if (data) dispatch({ field: 'models', value: data });

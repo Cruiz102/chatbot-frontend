@@ -45,9 +45,12 @@ const useApiService = () => {
 
   const getWeaviateCollection = useCallback(
     (params: GetWeaviateCollectionRequestProps, signal?: AbortSignal) => {
-      console.log("NOOOOOOO")
-      return fetchService.post<GetWeaviateCollectionRequestProps>('api/databaseRetrieval', {
-        body: {key: params.key, url: params.url},
+      console.log(params.key, params.url)
+      return fetchService.post<GetWeaviateCollectionRequestProps>(`/api/database`, {
+        body: { url: params.url, key: params.key},
+        headers: {
+          'Content-Type': 'application/json',
+        },
         signal,
     });
   },
