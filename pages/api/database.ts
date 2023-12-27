@@ -51,7 +51,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         vectorizer: cls.vectorizer,
       };
     });
-    console.log(weaviateSchemas);
     return res.status(200).json(weaviateSchemas);
   } catch (error) {
     console.error(error);

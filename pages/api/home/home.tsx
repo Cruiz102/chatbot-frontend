@@ -37,7 +37,7 @@ import { Chat } from '@/components/Chat/Chat';
 import { Chatbar } from '@/components/Chatbar/Chatbar';
 import { Navbar } from '@/components/Mobile/Navbar';
 import Promptbar from '@/components/ToolsBar';
-
+import Snackbar from '@/components/SnackBar'
 import HomeContext from './home.context';
 import { HomeInitialState, initialState } from './home.state';
 
@@ -50,7 +50,6 @@ interface Props {
   serverSideApiKeyIsSet: boolean;
   serverSidePluginKeysSet: boolean;
   defaultModelId: OpenAIModelID;
-  // pluginList: PluginKey[]
 }
 
 const Home = ({
@@ -131,9 +130,24 @@ const Home = ({
   );
 
   
-
-  // console.log(weaviateClasses, queryError);
+  console.log("fhahf")
+  console.log(weaviateClasses, queryError);
   
+  useEffect(() => {
+    if (data) dispatch({ field: 'models', value: data });
+  }, [data, dispatch]);
+
+  useEffect(() => {
+    dispatch({ field: 'modelError', value: getModelsError(error) });
+
+    // When rendering home  and the openai key was incorrect
+    // we want to to remove it.
+    dispatch({field: 'models', value: filterOpenAIModels(models)})
+
+  }, [dispatch, error, getModelsError]);
+
+
+
   useEffect(() => {
     if (data) dispatch({ field: 'models', value: data });
   }, [data, dispatch]);
@@ -426,6 +440,7 @@ const Home = ({
         handleAddLocalModel
       }}
     >
+
       <Head>
         <title>Chatbot UI</title>
         <meta name="description" content="ChatGPT but better." />

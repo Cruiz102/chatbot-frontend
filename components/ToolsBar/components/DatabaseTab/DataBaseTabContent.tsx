@@ -2,8 +2,18 @@ import React, { useState } from 'react';
 import { IconDatabase, IconFilePlus, IconSchema } from '@tabler/icons-react';
 import { SelectDatabaseModal } from './SelectDatabaseModal';
 import { SchemaCreationModal } from './SchemaCreationModal';
+import { Database } from '@/types/database';
+interface DatabaseTabProps{
+  databases: Database[],
+  // databasesClassDocuments: any, // TODO: Create a interface for saving documents inside a Weaviate class for seeing the files in a folder
+  handleSearchTerm: (term: string) => void;
+  handleCreateClass:() => void;
 
-const DatabaseTab: React.FC = () => {
+
+}
+
+
+const DatabaseTab: React.FC<DatabaseTabProps> = () => {
   const [showDatabasePopup, setShowDatabasePopup] = useState(false);
   const [showSchemaModal, setShowSchemaModal] = useState(false);
 
@@ -17,9 +27,6 @@ const DatabaseTab: React.FC = () => {
     setShowSchemaModal(true);
   };
 
-  const handleSaveSchema = (schemaDetails) => {
-    // Your save logic here
-  };
 
   const handleSelectDatabase = (database: string) => {
     // Logic after selecting a database
@@ -42,7 +49,7 @@ const DatabaseTab: React.FC = () => {
       {/* Database Popup */}
       {showDatabasePopup && (
         <SelectDatabaseModal
-          databases={['Database1', 'Database2', 'Database3']}
+          databasesNames= {databases.map((Database) => Database.name)}
           onClose={() => setShowDatabasePopup(false)}
           onSelectDatabase={handleSelectDatabase}
         />
@@ -67,7 +74,7 @@ const DatabaseTab: React.FC = () => {
       {showSchemaModal && (
         <SchemaCreationModal
           onClose={() => setShowSchemaModal(false)}
-          onSaveSchema={handleSaveSchema}
+          onSaveSchema={handleCreateSchema}
         />
       )}
     </div>

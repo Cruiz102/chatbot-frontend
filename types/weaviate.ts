@@ -1,4 +1,4 @@
-import { ChatBody, Message } from './chat';
+import { ChatBody } from './chat';
 
 export interface WeaviateBody extends ChatBody {
   weaviateURL: string;

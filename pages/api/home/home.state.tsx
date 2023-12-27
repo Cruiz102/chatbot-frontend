@@ -1,15 +1,17 @@
 import { Conversation, Message } from '@/types/chat';
-import { DatabaseClass, DatabaseItem,  } from '@/types/database';
+import { WeaviateSchemaDetails } from '@/types/weaviate';
 import { ErrorMessage } from '@/types/error';
 import { FolderInterface } from '@/types/folder';
 import { OpenAIModelID } from '@/types/openai';
 import { AIModel } from '@/types/llmModel';
 import { PluginKey, PluginKeysList } from '@/types/plugin';
 import { Prompt } from '@/types/prompt';
+import { Database, DatabasesList } from '@/types/database';
 
 export interface HomeInitialState {
   apiKey: string;
   pluginKeys: PluginKey[];
+  databases: Database[];
   loading: boolean;
   lightMode: 'light' | 'dark';
   messageIsStreaming: boolean;
@@ -20,8 +22,6 @@ export interface HomeInitialState {
   selectedConversation: Conversation | undefined;
   currentMessage: Message | undefined;
   prompts: Prompt[];
-  Databaseclasses: DatabaseClass[];
-  // SchemaItems: SchemaItem[];
   temperature: number;
   showChatbar: boolean;
   showPromptbar: boolean;
@@ -37,6 +37,7 @@ export const initialState: HomeInitialState = {
   apiKey: '',
   loading: false,
   pluginKeys: PluginKeysList,
+  databases: DatabasesList,
   lightMode: 'dark',
   messageIsStreaming: false,
   modelError: null,
@@ -46,7 +47,6 @@ export const initialState: HomeInitialState = {
   selectedConversation: undefined,
   currentMessage: undefined,
   prompts: [],
-  Databaseclasses: [],
   temperature: 1,
   showPromptbar: true,
   showChatbar: true,

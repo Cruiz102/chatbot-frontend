@@ -15,23 +15,9 @@ export const SelectDatabaseModal: React.FC<SelectDatabaseModalProps> = ({
 }) => {
   const { t } = useTranslation('sidebar');
   const modalRef = useRef<HTMLDivElement>(null);
-  const [databases, setDatabases] = useState<string[]>([]);
-  const { updateDatabaseClasses } = useContext(HomeContext); // Use context to update HomeState
+  useContext(HomeContext); // Use context to update HomeState
 
-  useEffect(() => {
-    const fetchDatabases = async () => {
-      try {
-        const response = await fetch('API_ENDPOINT_URL'); // Replace with your API endpoint
-        const data = await response.json();
-        setDatabases(data.map(db => db.name)); // Assuming each database object has a 'name' property
-        updateDatabaseClasses(data); // Update HomeState
-      } catch (error) {
-        console.error('Failed to fetch databases:', error);
-      }
-    };
 
-    fetchDatabases();
-  }, [updateDatabaseClasses]);
 
 
 
@@ -57,7 +43,7 @@ export const SelectDatabaseModal: React.FC<SelectDatabaseModalProps> = ({
       >
         <div className="mb-4 text-lg font-bold">{t('Select a Database')}</div>
         <ul className="mb-4">
-          {databases.map((db, index) => (
+          {databasesNames.map((db, index) => (
             <li key={index} className="p-2 hover:bg-gray-100 cursor-pointer" onClick={() => onSelectDatabase(db)}>
               {db}
             </li>

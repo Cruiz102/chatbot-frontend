@@ -24,7 +24,7 @@ import ToolsbarContext from './ToolsBar.context';
 import { ToolsInitialState, initialState } from './ToolsBar.state';
 import { Databases } from './components/DatabaseTab/Databases';
 import { v4 as uuidv4 } from 'uuid';
-import { Databaseclasses } from '@/types/databaseItem';
+import { Database } from '@/types/database';
 
 const ToolsbBar = () => {
   const { t } = useTranslation('promptbar');
@@ -38,7 +38,7 @@ const ToolsbBar = () => {
   });
 
   const {
-    state: { prompts, defaultModelId, showPromptbar,Databaseclasses },
+    state: { prompts, defaultModelId, showPromptbar, databases },
     dispatch: homeDispatch,
     handleCreateFolder,
   } = useContext(HomeContext);
@@ -132,17 +132,17 @@ const ToolsbBar = () => {
   // ------------DATABASE HANDLERERS----------------------------
   // ---------------------------------------------------------
 
-  const [filteredDatabases, setFilteredDatabases] = useState<Databaseclasses[]>([]);
+  const [filteredDatabases, setFilteredDatabases] = useState<Database[]>([]);
   useEffect(() => {
     // Filter logic
-    const newFilteredDatabases = Databaseclasses.filter((databaseItem) => {
+    const newFilteredDatabases = databases.filter((databaseItem) => {
       const searchable = databaseItem.name.toLowerCase() + ' ' + databaseItem.name.toLowerCase();
       return searchable.includes(searchTerm.toLowerCase());
     });
 
     // Update the state
     setFilteredDatabases(newFilteredDatabases);
-  }, [searchTerm, Databaseclasses]);
+  }, [searchTerm, databases]);
 
 
 
@@ -177,7 +177,14 @@ const tabsConfig = [
   },
   {
     title: 'Database',
-    components: [<DatabaseTab />], // Array of components for the Database tab
+    components: [<DatabaseTab
+      databases= {databases}
+      handleSearchTerm={(s) => {}}
+      handleCreateClass={()=>{}}
+      
+
+
+       />],
   },
   // ... more tabs ...
 ];
