@@ -4,6 +4,33 @@ export interface WeaviateBody extends ChatBody {
   weaviateURL: string;
   weaviateAPI: string;
   className: string;
+  limit: number;
+  offset: number ;
+  distanceThreshhold: number;
+  similarity: number;
+  QueryType: 'GET' | 'AGGRETATE';
+  properties: WeaviateProperty [];
+
+}
+
+
+export interface WeaviateWhereFilter {
+  operator: 'LIKE' |'AND' | 'OR'
+  valueText: string;
+  valueDate: string;
+  valueBoolean: boolean;
+  path: string[];
+
+
+}
+
+export enum WeaviateVectorizer {
+  OpenAI = 'openai',
+  COHERE = 'cohere',  
+  TEXT2VEC_AWS = 'text2vec-aws',
+  
+
+
 }
 
 export enum WeaviateDataType {
@@ -40,3 +67,22 @@ export interface WeaviateSchemaDetails {
   vectorizer: string;
 }
 
+// If no Scheme is porportinoned this are the 
+// default properties.
+const defaultProperties = [
+    {
+        name: "document",
+        dataType: WeaviateDataType.TEXT,
+        description: "Name of the document",
+    },
+    {
+      name: 'text',
+      dataType: WeaviateDataType.TEXT,
+      description: "Content of the Chunk",
+    },
+    {
+      name: 'page',
+      dataType: WeaviateDataType.INT,
+      description: "Page of the document where is the chunk",
+    },
+]

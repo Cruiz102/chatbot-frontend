@@ -13,7 +13,7 @@ interface DatabaseTabProps{
 }
 
 
-const DatabaseTab: React.FC<DatabaseTabProps> = () => {
+const DatabaseTab: React.FC<DatabaseTabProps> = ({ databases, handleSearchTerm, handleCreateClass }) => {
   const [showDatabasePopup, setShowDatabasePopup] = useState(false);
   const [showSchemaModal, setShowSchemaModal] = useState(false);
 
