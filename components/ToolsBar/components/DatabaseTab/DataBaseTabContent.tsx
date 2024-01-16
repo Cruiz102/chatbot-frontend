@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { IconDatabase, IconFilePlus, IconSchema } from '@tabler/icons-react';
 import { SelectDatabaseModal } from './SelectDatabaseModal';
 import { SchemaCreationModal } from './SchemaCreationModal';
-import { Database } from '@/types/database';
+import { Database, DatabaseName } from '@/types/database';
 interface DatabaseTabProps{
   databases: Database[],
   // databasesClassDocuments: any, // TODO: Create a interface for saving documents inside a Weaviate class for seeing the files in a folder
@@ -16,6 +16,7 @@ interface DatabaseTabProps{
 const DatabaseTab: React.FC<DatabaseTabProps> = ({ databases, handleSearchTerm, handleCreateClass }) => {
   const [showDatabasePopup, setShowDatabasePopup] = useState(false);
   const [showSchemaModal, setShowSchemaModal] = useState(false);
+  const [databaseSelected, setDatabaseSelected] = useState<DatabaseName>(DatabaseName.NoneDatabase);
 
   const handleAddDocument = () => {
     // Logic for adding new document information
@@ -27,11 +28,15 @@ const DatabaseTab: React.FC<DatabaseTabProps> = ({ databases, handleSearchTerm, 
     setShowSchemaModal(true);
   };
 
+// This will set the databases selected from the DatabaseSelectionModal
+  const handleSelectDatabase = (database: DatabaseName) => {
+    setDatabaseSelected(database);
 
-  const handleSelectDatabase = (database: string) => {
-    // Logic after selecting a database
-    setShowDatabasePopup(false);
+    // Disable the modal when a database has been selected
+    setShowDatabasePopup(false)
   };
+
+
 
   return (
     <div>
@@ -45,19 +50,36 @@ const DatabaseTab: React.FC<DatabaseTabProps> = ({ databases, handleSearchTerm, 
       </button>
   
 
-  
+  {/* /////////////////////////////////// */}
+  {/* ////////POP UP MODALS//////////////// */}
+  {/* /////////////////////////////////// */}
       {/* Database Popup */}
       {showDatabasePopup && (
         <SelectDatabaseModal
           databasesNames= {databases.map((Database) => Database.name)}
           onClose={() => setShowDatabasePopup(false)}
           onSelectDatabase={handleSelectDatabase}
+   
         />
       )}
+
+          {/* Schema Creation Modal */}
+        {showSchemaModal && (
+        <SchemaCreationModal
+          onClose={() => setShowSchemaModal(false)}
+          onSaveSchema={handleCreateSchema}
+        />
+      )}
+
+  {/* /////////////////////////////////// */}
+
+
+
   
+
       {/* Separate Row for the Last Two Buttons */}
-      {showDatabasePopup && (
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
+      {(databaseSelected === DatabaseName.WEAVIATE) && (
+        <div style={{ display: 'flex', marginTop: '20px' }}>
           {/* Add Document Button */}
           <button onClick={handleAddDocument} /* style object */>
             <IconFilePlus />
@@ -70,13 +92,7 @@ const DatabaseTab: React.FC<DatabaseTabProps> = ({ databases, handleSearchTerm, 
         </div>
       )}
   
-      {/* Schema Creation Modal */}
-      {showSchemaModal && (
-        <SchemaCreationModal
-          onClose={() => setShowSchemaModal(false)}
-          onSaveSchema={handleCreateSchema}
-        />
-      )}
+
     </div>
   );
   

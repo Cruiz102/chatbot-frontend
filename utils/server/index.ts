@@ -1,5 +1,5 @@
 import { Message } from '@/types/chat';
-import { OpenAIModel } from '@/types/openai';
+import { AIModel } from '@/types/llmModel';
 
 import { AZURE_DEPLOYMENT_ID, OPENAI_API_HOST, OPENAI_API_TYPE, OPENAI_API_VERSION, OPENAI_ORGANIZATION } from '../app/const';
 
@@ -24,7 +24,7 @@ export class OpenAIError extends Error {
 }
 
 export const OpenAIStream = async (
-  model: OpenAIModel,
+  model: AIModel,
   systemPrompt: string,
   temperature : number,
   key: string,
@@ -62,9 +62,7 @@ export const OpenAIStream = async (
       stream: true,
     }),
   });
-  console.log("Brpp")
-  console.log(res.status)
-console.log("Mateus")
+
   const encoder = new TextEncoder();
   const decoder = new TextDecoder();
 

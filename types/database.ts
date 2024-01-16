@@ -16,7 +16,8 @@ export enum DatabaseName{
   GOOGLE_DRIVE= "Google Drive",
   ONE_DRIVE= "One Drive",
   NOTION= "Notion",
-  PINECONE= 'Pinecone'
+  PINECONE= "Pinecone",
+  NoneDatabase = "None"
 
 }
 

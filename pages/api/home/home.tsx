@@ -130,8 +130,7 @@ const Home = ({
   );
 
   
-  console.log("fhahf")
-  console.log(weaviateClasses, queryError);
+
   
   useEffect(() => {
     if (data) dispatch({ field: 'models', value: data });

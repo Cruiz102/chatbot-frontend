@@ -28,9 +28,14 @@ export enum WeaviateVectorizer {
   OpenAI = 'openai',
   COHERE = 'cohere',  
   TEXT2VEC_AWS = 'text2vec-aws',
-  
+  IMAGE2VEC = 'image2vec'
+}
 
 
+export interface OpenAIModuleConfig{
+  model: string,
+  modelVersion: string,
+  type: 'text-embedding-ada-002' | "Other Embeddings",
 }
 
 export enum WeaviateDataType {
