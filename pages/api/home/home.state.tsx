@@ -16,6 +16,7 @@ export interface HomeInitialState {
   lightMode: 'light' | 'dark';
   messageIsStreaming: boolean;
   modelError: ErrorMessage | null;
+  weaviateError: ErrorMessage | null;
   models: AIModel[];
   folders: FolderInterface[];
   conversations: Conversation[];

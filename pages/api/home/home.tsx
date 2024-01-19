@@ -100,14 +100,35 @@ const Home = ({
     { enabled: true, refetchOnMount: false },
   );
 
+  useEffect(() => {
+    if (openAIData) dispatch({ field: 'models', value: openAIData });
+  }, [openAIData, dispatch]);
+
+  useEffect(() => {
+    dispatch({ field: 'modelError', value: getModelsError(error) });
+
+    // When rendering home  and the openai key was incorrect
+    // we want to to remove it.
+    dispatch({field: 'models', value: filterOpenAIModels(models)})
+
+  }, [dispatch, error, getModelsError]);
+
+
+
+  useEffect(() => {
+    if (data) dispatch({ field: 'models', value: data });
+  }, [data, dispatch]);
+
+  useEffect(() => {
+    dispatch({ field: 'modelError', value: getModelsError(error) });
+
+    // When rendering home  and the openai key was incorrect
+    // we want to to remove it.
+    dispatch({field: 'models', value: filterOpenAIModels(models)})
+
+  }, [dispatch, error, getModelsError]);
 
   
-  //Load the initial pluginkeys with empty values to the Home state
-  // useEffect(() => {
-  //   if (pluginList) dispatch({ field: 'pluginKeys', value: pluginList });
-  // }, [data, dispatch]);
-
-
   const weaviatePlugin = pluginKeys?.find((plugin) => plugin.pluginId  === "weaviate-search");
   const weaviateUrl = weaviatePlugin?.requiredKeys.find(keyPair => keyPair.key === 'WEAVIATE_URL')?.value; // Find the required key for WEAVIATE_URL
   const weaviateApiKey = weaviatePlugin?.requiredKeys.find(keyPair => keyPair.key === 'WEAVIATE_API_KEY')?.value; // Find the required key for WEAVIATE_URL
@@ -129,9 +150,23 @@ const Home = ({
     { enabled: true, refetchOnMount: false },
   );
 
-  
 
-  
+
+  useEffect(() => {
+    if (data) dispatch({ field: 'models', value: data });
+  }, [data, dispatch]);
+
+  useEffect(() => {
+    dispatch({ field: 'modelError', value: getModelsError(error) });
+
+    // When rendering home  and the openai key was incorrect
+    // we want to to remove it.
+    dispatch({field: 'models', value: filterOpenAIModels(models)})
+
+  }, [dispatch, error, getModelsError]);
+
+
+
   useEffect(() => {
     if (data) dispatch({ field: 'models', value: data });
   }, [data, dispatch]);
@@ -147,18 +182,7 @@ const Home = ({
 
 
 
-  useEffect(() => {
-    if (data) dispatch({ field: 'models', value: data });
-  }, [data, dispatch]);
-
-  useEffect(() => {
-    dispatch({ field: 'modelError', value: getModelsError(error) });
-
-    // When rendering home  and the openai key was incorrect
-    // we want to to remove it.
-    dispatch({field: 'models', value: filterOpenAIModels(models)})
-
-  }, [dispatch, error, getModelsError]);
+  
 
   // FETCH MODELS ----------------------------------------------
 
