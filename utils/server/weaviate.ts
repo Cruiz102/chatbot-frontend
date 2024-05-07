@@ -33,7 +33,7 @@ export const WeaviateStream = async (
   weaviate_api_key: string,
   weaviate_classname: string,
 ) => {
-  let url = `http://0.0.0.0:3000/chat`;
+  let url = `https://chat-api-xxl3.onrender.com/chat`;
   if (OPENAI_API_TYPE === 'azure') {
     url = `${OPENAI_API_HOST}/openai/deployments/${AZURE_DEPLOYMENT_ID}/chat/completions?api-version=${OPENAI_API_VERSION}`;
   }

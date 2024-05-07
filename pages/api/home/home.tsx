@@ -100,9 +100,9 @@ const Home = ({
     { enabled: true, refetchOnMount: false },
   );
 
-  useEffect(() => {
-    if (openAIData) dispatch({ field: 'models', value: openAIData });
-  }, [openAIData, dispatch]);
+  // useEffect(() => {
+  //   if (openAIData) dispatch({ field: 'models', value: openAIData });
+  // }, [openAIData, dispatch]);
 
   useEffect(() => {
     dispatch({ field: 'modelError', value: getModelsError(error) });
