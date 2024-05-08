@@ -32,14 +32,6 @@ export interface Database {
 }
 
 
-// Add a property to store the file extension
-export interface DatabaseItem {
-  fileName: string;
-  FileType: string;
-  fileType: AcceptedFileTypes; // Add this property to store the file extension
-  isDownload: boolean
-}
-
 
 
 

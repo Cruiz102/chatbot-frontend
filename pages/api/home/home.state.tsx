@@ -39,6 +39,7 @@ export const initialState: HomeInitialState = {
   loading: false,
   pluginKeys: PluginKeysList,
   databases: DatabasesList,
+  weaviateError: null,
   lightMode: 'dark',
   messageIsStreaming: false,
   modelError: null,

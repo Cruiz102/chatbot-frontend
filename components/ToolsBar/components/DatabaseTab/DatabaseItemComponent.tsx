@@ -1,10 +1,10 @@
 // components/DatabaseItemComponent.tsx
 import React from 'react';
-import { DatabaseItem } from '@/types/databaseItem';
+import { Database } from '@/types/database';
 import { IconDatabase } from '@tabler/icons-react';
 
 interface DatabaseItemProps {
-  databaseItem: DatabaseItem;
+  databaseItem: Database;
   // Add more props as needed for event handling, etc.
 }
 

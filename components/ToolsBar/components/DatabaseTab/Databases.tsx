@@ -1,10 +1,10 @@
 // components/Databases.tsx
 import React from 'react';
-import { DatabaseItem } from '@/types/databaseItem';
+import { Database } from '@/types/database';
 import { DatabaseItemComponent } from './DatabaseItemComponent';
 
 interface DatabasesProps {
-  databases: DatabaseItem[];
+  databases: Database[];
   // Add more props as needed for event handling, etc.
 }
 

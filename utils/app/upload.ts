@@ -1,5 +1,5 @@
 // utils/api.ts
-import { UploadPDFRequest, CreateClassRequest } from '../interfaces/UploadPDFRequest';
+import { UploadPDFRequest, CreateClassRequest } from "@/types/UploadPDFRequest";
 
 const API_URL = 'http://localhost:8080'; // Replace with your actual API URL
 

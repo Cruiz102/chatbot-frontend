@@ -44,7 +44,7 @@ const ToolsbBar = () => {
   } = useContext(HomeContext);
 
   const {
-    state: { searchTerm, filteredPrompts , },
+    state: { searchTerm, filteredPrompts },
     dispatch: promptDispatch,
   } = promptBarContextValue;
 
@@ -158,6 +158,7 @@ const tabsConfig = [
   {
     title: 'Chats',
     components: [<PromptsTab 
+      key={'prompts-tab'}
       addItemButtonTitle={t('New prompt')}
       searchTerm={searchTerm}
       handleSearchTerm={(searchTerm: string) =>
@@ -178,6 +179,7 @@ const tabsConfig = [
   {
     title: 'Database',
     components: [<DatabaseTab
+    key={'database-tab'}
       databases= {databases}
       handleSearchTerm={(s) => {}}
       handleCreateClass={()=>{}}

@@ -2,7 +2,6 @@ import React, { useState, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IconFolderPlus, IconMistOff, IconPlus } from '@tabler/icons-react';
 import { IconDatabase, IconFilePlus, IconSchema   } from '@tabler/icons-react';
-import {SchemaDetails} from '../../types/database';
 import { SchemaCreationModal } from '../ToolsBar/components/DatabaseTab/SchemaCreationModal';
 import {
   CloseSidebarButton,
